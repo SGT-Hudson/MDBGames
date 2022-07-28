@@ -12,9 +12,34 @@ img {
 
 .start-middle-section {
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-bottom: 4em;
+  gap: 5em;
 }
 
+.arrows {
+  width: 400px;
+  height: 129px;
+  clip-path: url(#arrows);
+  background: linear-gradient(
+    90deg,
+    rgba(68, 68, 68, 1) 0%,
+    rgba(130, 184, 255, 1) 10%,
+    rgba(130, 184, 255, 1) 11%,
+    rgba(68, 68, 68, 1) 21%
+  );
+  background-size: 500% 500%;
+  animation: movement-arrows 2s linear infinite;
+}
+
+@keyframes movement-arrows {
+  0% {
+    background-position: 120% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
 /* 
 Arrow {
   -webkit-animation: color-change 1s 800ms infinite both;
@@ -28,12 +53,4 @@ Arrow {
   100% {
     background: #b22cff;
   }
-}
-@keyframes color-change {
-  0% {
-    background: #19dcea;
-  }
-  100% {
-    background: #b22cff;
-  }
-} */
+}*/

@@ -1,0 +1,6 @@
+.playground-container {
+  background-color: var(--foreground);
+  margin-top: 30px;
+  margin-left: 300px;
+  padding: 30px;
+}

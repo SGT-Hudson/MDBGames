@@ -17,6 +17,7 @@ code {
   --letters: #fff;
   --background: #1f1f1f;
   --foreground: #3f3f3f;
+  --bubble: #444444;
 }
 
 /* GENERAL FLEX CSS ---------------------------- */
@@ -36,8 +37,9 @@ code {
 
 /* GENERAL LOGO CSS ---------------------------- */
 .large-logo {
+  flex-shrink: 0;
   width: 500px;
-  height: 250px;
+  height: 200px;
   margin: 0 auto;
   display: block;
 }
@@ -55,6 +57,7 @@ button {
   border: 8px solid var(--blue);
   border-radius: 18px;
   font-size: 1.9em;
+  letter-spacing: 0.085em;
   font-family: 'Roboto', sans-serif;
   background-color: var(--background);
   color: var(--blue);

@@ -1,5 +1,10 @@
 const image500 = 'https://image.tmdb.org/t/p/w500';
 
+const randActorPicker = (data) => {
+  const randomActor = Math.floor(Math.random() * 21);
+  return data[randomActor];
+};
+
 export const newGame = async () => {
   const randomPage = Math.floor(Math.random() * 11);
 
@@ -9,38 +14,40 @@ export const newGame = async () => {
   const data = await response.json();
 
   // Randomly select two actors from the API response
-  const actorPair = [{}, {}];
-  const randomActor1 = Math.floor(Math.random() * data.results.length);
-  let randomActor2 = Math.floor(Math.random() * data.results.length);
+  const actorPair = [randActorPicker(data), randActorPicker(data)];
+
+  // Ensure that the two actors don't have the adult flag set to true
+  while (actorPair[0].adult) {
+    actorPair[0] = randActorPicker(data);
+  }
+  while (actorPair[1].adult) {
+    actorPair[1] = randActorPicker(data);
+  }
 
   // If the two actors are the same, select a new one
-  if (randomActor1 === randomActor2) {
-    randomActor2 = Math.floor(Math.random() * data.results.length);
+  if (actorPair[0].id === actorPair[1].id) {
+    actorPair[1] = randActorPicker(data);
   }
 
-  //only selecting data that is usefull for the game ---------------------------------
-  actorPair[0].id = data.results[randomActor1].id;
-  actorPair[0].name = data.results[randomActor1].name;
-  actorPair[0].image = image500 + data.results[randomActor1].profile_path;
-  actorPair[0].known_for = [{}, {}, {}];
-  for (let i = 0; i < data.results[randomActor1].known_for.length; i++) {
-    actorPair[0].known_for[i].title =
-      data.results[randomActor1].known_for[i].title;
-    actorPair[0].known_for[i].poster_path =
-      image500 + data.results[randomActor1].known_for[i].poster_path;
-  }
+  //providing the actual image path
+  actorPair[0].image = actorPair[1].profile_path
+    ? image500 + actorPair[1].profile_path
+    : null;
 
-  actorPair[1].id = data.results[randomActor2].id;
-  actorPair[1].name = data.results[randomActor2].name;
-  actorPair[1].image = image500 + data.results[randomActor2].profile_path;
-  actorPair[1].known_for = [{}, {}, {}];
-  for (let i = 0; i < data.results[randomActor2].known_for.length; i++) {
-    actorPair[1].known_for[i].title =
-      data.results[randomActor2].known_for[i].title;
-    actorPair[1].known_for[i].poster_path =
-      image500 + data.results[randomActor2].known_for[i].poster_path;
-  }
-  //---------------------------------------------------------------------------------
+  actorPair[1].image = actorPair[1].profile_path
+    ? image500 + actorPair[1].profile_path
+    : null;
 
   return actorPair;
+};
+
+export const getActor = async (id) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=combined_credits`
+  );
+  const data = await response.json();
+
+  data.profile_path = data.profile_path ? image500 + data.profile_path : null;
+
+  return data;
 };

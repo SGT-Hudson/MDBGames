@@ -1,19 +1,27 @@
 import React from 'react';
 import './ImageContainer.css';
 
-function PortraitContainer({ actor, size }) {
+function ImageContainer({ actor, size, position }) {
+  const textSize = actor.name.length > 20 ? ' small-text' : '';
+
   return (
-    <div className={`${size}-portrait flex-column`}>
+    <>
       {actor !== null ? (
-        <>
-          <img className='portrait-image' src={actor.image} alt={actor.name} />
-          <p className='portrait-text'>{actor.name}</p>
-        </>
+        <div className={`${size}-portrait ${position}`}>
+          <div className='iner-shadow'>
+            <img
+              className={`${size}-portrait-image`}
+              src={actor.image}
+              alt={actor.name}
+            />
+          </div>
+          <p className={`portrait-text${textSize}`}>{actor.name}</p>
+        </div>
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 }
 
-export default PortraitContainer;
+export default ImageContainer;
