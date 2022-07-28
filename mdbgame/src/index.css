@@ -11,3 +11,78 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+:root {
+  --blue: #82b8ff;
+  --letters: #fff;
+  --background: #1f1f1f;
+  --foreground: #3f3f3f;
+}
+
+/* GENERAL FLEX CSS ---------------------------- */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.flex-row {
+  display: flex;
+  gap: 1em;
+}
+/* --------------------------------------------- */
+
+/* GENERAL LOGO CSS ---------------------------- */
+.large-logo {
+  width: 500px;
+  height: 250px;
+  margin: 0 auto;
+  display: block;
+}
+
+.small-logo {
+  width: 250px;
+  height: 125px;
+  margin: 0 auto;
+  display: block;
+}
+/* --------------------------------------------- */
+
+/* GENERAL BUTTONS CSS ------------------------- */
+button {
+  border: 8px solid var(--blue);
+  border-radius: 18px;
+  font-size: 1.9em;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background);
+  color: var(--blue);
+  cursor: pointer;
+  transition: color 0.1s ease-in-out;
+}
+button:hover {
+  background-color: var(--blue);
+  color: var(--background);
+  transition: color 0.1s ease-in-out;
+}
+
+.large-button {
+  width: 376px;
+  height: 72px;
+}
+
+.medium-button {
+  width: 288px;
+  height: 72px;
+}
+
+.small-button {
+  width: 72px;
+  height: 72px;
+}
+
+.large-text {
+  font-size: 2.4em;
+}
+/* --------------------------------------------- */

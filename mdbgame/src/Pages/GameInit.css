@@ -1,0 +1,39 @@
+.start-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+}
+
+img {
+  width: 250px;
+}
+
+.start-middle-section {
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 
+Arrow {
+  -webkit-animation: color-change 1s 800ms infinite both;
+  animation: color-change 1s 800ms infinite both;
+}
+
+@-webkit-keyframes color-change {
+  0% {
+    background: #19dcea;
+  }
+  100% {
+    background: #b22cff;
+  }
+}
+@keyframes color-change {
+  0% {
+    background: #19dcea;
+  }
+  100% {
+    background: #b22cff;
+  }
+} */
