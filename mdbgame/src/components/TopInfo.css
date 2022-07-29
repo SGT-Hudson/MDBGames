@@ -1,13 +1,24 @@
 .top-info-container {
-  background-color: var(--bubble);
-  margin-left: 20px;
-  padding: 20px;
-  padding-top: 40px;
-  border-radius: 18px;
+  /* background-color: var(--bubble); */
   width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+  /* margin-left: 20px;
+  border-radius: 18px;
+  width: 100%; */
 }
 
-.top-info-text-container {
-  justify-content: center;
-  gap: 50px;
+.top-info-text {
+  width: 90%; /* Can be in percentage also. */
+  margin: 0 auto;
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.top-info-movies {
+  width: 90%; /* Can be in percentage also. */
+  margin: 0 auto;
+  position: relative;
 }

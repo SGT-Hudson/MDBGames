@@ -9,7 +9,7 @@ function Sidebar({ actor }) {
     <div className='flex-column sidebar'>
       <div className='flex-column'>
         <Logo className='small-logo' />
-        <ImageContainer actor={actor} size={'small'} />
+        <ImageContainer item={actor} size={'small'} />
       </div>
       <Timer />
     </div>

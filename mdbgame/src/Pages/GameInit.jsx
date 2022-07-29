@@ -31,7 +31,7 @@ function GameInit() {
           {/* -------------------Middle section---------------------- */}
           <div className='flex-row start-middle-section'>
             <PortraitContainer
-              actor={actors[0]}
+              item={actors[0]}
               size={'large'}
               position={'left'}
             />
@@ -41,7 +41,7 @@ function GameInit() {
             </div>
 
             <PortraitContainer
-              actor={actors[1]}
+              item={actors[1]}
               size={'large'}
               position={'right'}
             />

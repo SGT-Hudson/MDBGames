@@ -1,39 +1,25 @@
 import React, { useEffect } from 'react';
+import ImageContainer from './ImageContainer';
 import './TopInfo.css';
 
-function TopInfo({ birthday, deathday, nationality, credits }) {
-  const thisYear = new Date().getFullYear();
-  deathday
-    ? (deathday = `${deathday.substring(0, 4)} (Died)`)
-    : (deathday = 'Alive');
-  birthday
-    ? (birthday = `${birthday.substring(0, 4)}`)
-    : (birthday = 'Unknown');
-  nationality ? (nationality = `${nationality}`) : (nationality = null);
-
-  useEffect(() => {
-    credits.sort((a, b) => {
-      return a.popularity >= b.popularity ? -1 : 1;
-    });
-  }, [credits]);
+function TopInfo({ top4 }) {
+  console.log('TopInfo credits:', top4);
 
   return (
-    <div className='top-info-container small-shadow'>
-      <div className='top-info-text-container flex-row'>
-        <h3>
-          {`Life: ${birthday} - ${deathday} `}
-          <span className='grey-text'> ({thisYear - birthday} years old)</span>
-        </h3>
-        <h3>
-          {'Born in: '}
-          {nationality ? (
-            { nationality }
-          ) : (
-            <span className='grey-text'>not available</span>
-          )}
-        </h3>
+    <div className='top-info-container'>
+      <h1 className='top-info-text'>Known for:</h1>
+      <div className='flex-row top-info-movies'>
+        {top4.map((item) => {
+          return (
+            <ImageContainer
+              item={item}
+              size={'small'}
+              shadow={'small'}
+              playground={true}
+            />
+          );
+        })}
       </div>
-      <div></div>
     </div>
   );
 }

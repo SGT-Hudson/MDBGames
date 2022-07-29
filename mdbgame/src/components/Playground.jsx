@@ -7,35 +7,36 @@ import './Playground.css';
 import MovieList from './MovieList';
 
 function Playground({ actor }) {
-  const [currentItem, setCurrentItem] = useState({
-    ...actor,
-    combined_credits: { cast: [] },
-  });
+  const [currentItem, setCurrentItem] = useState({});
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     const getActorData = async () => {
       const actorData = await getActor(actor.id);
       setCurrentItem(actorData);
-      console.log('Current playing actor:', currentItem);
+      setReady(true);
     };
     getActorData();
   }, []);
   return (
-    <div className='playground-container'>
-      <div className='flex-row'>
-        <ImageContainer actor={currentItem} size={'large-playground'} />
-        <TopInfo
-          birthday={currentItem.birthday}
-          deathday={currentItem.deathday}
-          nationality={currentItem.nationality}
-          credits={currentItem.combined_credits.cast}
-        />
-      </div>
-      <h1 className='movie-list-title'>Performed in:</h1>
-      <MovieList
-        className='movie-list-container'
-        credits={currentItem.combined_credits.cast}
-      />
+    <div className='playground-background'>
+      {ready ? (
+        <div className='playground-container'>
+          <div className='flex-row'>
+            <ImageContainer
+              item={currentItem}
+              size={'large'}
+              shadow={'small'}
+            />
+
+            <TopInfo top4={currentItem.top4} />
+          </div>
+          <h1 className='movie-list-title'>Starred in:</h1>
+          <MovieList credits={currentItem.cast} />
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 }

@@ -52,23 +52,53 @@ export const getActor = async (id) => {
   const data = await response.json();
 
   data.image = data.profile_path ? image500 + data.profile_path : null;
+
+  let maxPopulatity = 0;
+  let minPopulatity = 0;
+  let maxVotes = 0;
+  let minVotes = 0;
   data.combined_credits.cast.forEach((production) => {
+    if (production.popularity > maxPopulatity) {
+      maxPopulatity = production.popularity;
+    }
+    if (production.popularity < minPopulatity) {
+      minPopulatity = production.popularity;
+    }
+    if (production.vote_count > maxVotes) {
+      maxVotes = production.vote_count;
+    }
+    if (production.vote_count < minVotes) {
+      minVotes = production.vote_count;
+    }
+
     if (production.media_type === 'tv') {
       production.release_date = production.first_air_date.substring(0, 4);
       production.title = production.name;
-    } else {
-      production.release_date = production.release_date.substring(0, 4);
-    }
+    } else production.release_date = production.release_date.substring(0, 4);
+
     if (production.poster_path)
       production.image = image500 + production.poster_path;
     else if (production.backdrop_path)
       production.image = image500 + production.backdrop_path;
     else production.image = null;
+
+    production.name = production.title;
   });
-  data.combined_credits.cast.sort((a, b) => {
+  console.log('populatity:', maxPopulatity, 'votes:', maxVotes);
+
+  data.top4 = data.combined_credits.cast
+    .sort((a, b) => {
+      return a.vote_count >= b.vote_count ? -1 : 1;
+    })
+    .slice(0, 4);
+  console.log(data.top4);
+
+  data.cast = data.combined_credits.cast.sort((a, b) => {
     return a.release_date >= b.release_date ? -1 : 1;
   });
 
+  delete data.combined_credits;
+  console.log(data);
   return data;
 };
 

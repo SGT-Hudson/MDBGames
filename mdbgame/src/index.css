@@ -24,6 +24,8 @@ code {
 
 * {
   color: white;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
 /* GENERAL FLEX CSS ---------------------------- */
@@ -69,6 +71,7 @@ button {
   color: var(--blue);
   cursor: pointer;
   transition: color 0.1s ease-in-out;
+  font-weight: 900;
 }
 button:hover {
   background-color: var(--blue);
@@ -95,3 +98,11 @@ button:hover {
   font-size: 2.4em;
 }
 /* --------------------------------------------- */
+
+.bold {
+  font-weight: 600;
+}
+
+.no-gap {
+  gap: 0;
+}

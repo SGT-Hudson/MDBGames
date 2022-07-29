@@ -5,8 +5,8 @@
 
 .movie-container {
   background-color: var(--bubble);
-  margin-top: 5px;
-  padding: 20px;
+  margin-top: 8px;
+  padding: 0.1em;
   padding-left: 50px;
   border-radius: 8px;
   box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);

@@ -2,37 +2,39 @@ import React from 'react';
 import { ReactComponent as Empty } from '../images/empty_profile_photo.svg';
 import './ImageContainer.css';
 
-function ImageContainer({ actor, size, position }) {
-  let shadow = 'large';
-  if (size === 'large-playground') {
-    size = 'large';
-    shadow = 'small';
-  }
+function ImageContainer(props) {
+  console.log(props);
+  const item = props.item;
+  let size = props.size;
+  const position = props.position || '';
+  const shadow = props.shadow || 'large';
 
   let textSize;
   if (size === 'large') {
-    if (actor.name.length >= 35) textSize = 'super-small';
-    else if (actor.name.length >= 29) textSize = 'small';
-    else if (actor.name.length >= 21) textSize = 'medium';
+    if (item.name.length >= 35) textSize = 'super-small';
+    else if (item.name.length >= 29) textSize = 'small';
+    else if (item.name.length >= 21) textSize = 'medium';
     else textSize = 'large';
   }
   if (size === 'small') {
-    if (actor.name.length >= 29) textSize = 'super-small';
-    else if (actor.name.length >= 22) textSize = 'small';
-    else if (actor.name.length >= 18) textSize = 'medium';
+    if (item.name.length >= 29) textSize = 'super-small';
+    else if (item.name.length >= 22) textSize = 'small';
+    else if (item.name.length >= 17) textSize = 'medium';
     else textSize = 'large';
   }
 
   return (
     <>
-      {actor !== null ? (
-        <div className={`${size}-portrait ${position} ${shadow}-shadow`}>
-          <div className='iner-shadow'>
-            {actor.image ? (
+      {item ? (
+        <div
+          className={`portrait ${size}-portrait ${position} ${shadow}-shadow`}
+        >
+          <div>
+            {item.image ? (
               <img
                 className={`${size}-portrait-image`}
-                src={actor.image}
-                alt={actor.name}
+                src={item.image}
+                alt={item.name}
               />
             ) : (
               <div className={`${size}-portrait-image empty-image`}>
@@ -40,7 +42,11 @@ function ImageContainer({ actor, size, position }) {
               </div>
             )}
           </div>
-          <p className={`${textSize}-text-image`}>{actor.name}</p>
+          <div
+            className={`${textSize}-text-image ${size}-text-name text-image bold`}
+          >
+            {item.name}
+          </div>
         </div>
       ) : (
         <></>
