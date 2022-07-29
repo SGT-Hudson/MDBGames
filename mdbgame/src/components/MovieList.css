@@ -1,0 +1,13 @@
+.grey-text {
+  color: var(--grey-text);
+  font-weight: light;
+}
+
+.movie-container {
+  background-color: var(--bubble);
+  margin-top: 5px;
+  padding: 20px;
+  padding-left: 50px;
+  border-radius: 8px;
+  box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);
+}

@@ -8,7 +8,7 @@ import './Game.css';
 function Game() {
   const location = useLocation();
   const actors = location.state;
-  console.log(actors);
+  console.log('Actors from Location: ', actors);
   return (
     <div className='flex-row game-container'>
       <Sidebar actor={actors[1]} />

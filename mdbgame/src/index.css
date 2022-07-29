@@ -16,8 +16,14 @@ code {
   --blue: #82b8ff;
   --letters: #fff;
   --background: #1f1f1f;
-  --foreground: #3f3f3f;
-  --bubble: #444444;
+  --foreground: #333333;
+  --bubble: #535353;
+  --image-background: #717171;
+  --grey-text: #bebebe;
+}
+
+* {
+  color: white;
 }
 
 /* GENERAL FLEX CSS ---------------------------- */

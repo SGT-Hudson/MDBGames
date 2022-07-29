@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import PortraitContainer from '../components/ImageContainer';
+
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as Arrows } from '../images/arrows.svg';
-import './GameInit.css';
+
+import PortraitContainer from '../components/ImageContainer';
+
 import { newGame } from '../api_calls';
+import './GameInit.css';
 
 function GameInit() {
   const [actors, setActors] = useState([null, null]);
@@ -12,19 +15,20 @@ function GameInit() {
   useEffect(() => {
     const createNewGame = async () => {
       const newGameResponse = await newGame();
-      console.log(newGameResponse);
       setActors(newGameResponse);
     };
 
     createNewGame();
-    console.log(actors);
+    console.log('Actors from GameInit:', actors);
   }, []);
 
   return (
     <>
       {actors[0] ? (
         <div className='start-container'>
+          {/* -------------------Top logo---------------------------- */}
           <Logo className='large-logo' />
+          {/* -------------------Middle section---------------------- */}
           <div className='flex-row start-middle-section'>
             <PortraitContainer
               actor={actors[0]}
@@ -42,6 +46,7 @@ function GameInit() {
               position={'right'}
             />
           </div>
+          {/* -------------------Bottom buttons---------------------- */}
           <div className='flex-row'>
             <Link to='/game' state={actors}>
               <button className='large-button'>START GAME</button>
@@ -49,11 +54,11 @@ function GameInit() {
             <Link to='/'>
               <button className='small-button large-text'> &lt;</button>
             </Link>
-            {/* here goes the whole menu */}
           </div>
+          {/* ------------------------------------------------------- */}
         </div>
       ) : (
-        <></>
+        <></> /* if we have no actors, load this  */
       )}
     </>
   );

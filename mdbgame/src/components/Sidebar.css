@@ -1,9 +1,9 @@
 .sidebar {
   position: fixed;
-  top: 0;
+  top: 20px;
   left: 0;
   bottom: 0;
-  width: 300px;
+  width: 320px;
   overflow-x: hidden;
   padding-bottom: 50px;
   justify-content: space-between;
