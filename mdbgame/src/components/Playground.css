@@ -1,8 +1,8 @@
 .playground-container {
   background-color: var(--foreground);
-
-  padding: 40px 42px;
-  /* width: 70vw;  */
+  margin: 30px 30px 25px 320px;
+  width: 100%;
+  padding: 52px 54px;
   border-radius: 18px;
 }
 
@@ -13,9 +13,4 @@
 
 .playground-image {
   box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);
-}
-
-.playground-background {
-  margin: 30px 30px 25px 320px;
-  width: 100%;
 }

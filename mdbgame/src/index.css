@@ -25,7 +25,7 @@ code {
 * {
   color: white;
   font-family: 'Roboto', sans-serif;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 /* GENERAL FLEX CSS ---------------------------- */
@@ -61,7 +61,7 @@ code {
 /* --------------------------------------------- */
 
 /* GENERAL BUTTONS CSS ------------------------- */
-button {
+.button {
   border: 8px solid var(--blue);
   border-radius: 18px;
   font-size: 1.9em;
@@ -73,7 +73,7 @@ button {
   transition: color 0.1s ease-in-out;
   font-weight: 900;
 }
-button:hover {
+.button:hover {
   background-color: var(--blue);
   color: var(--background);
   transition: color 0.1s ease-in-out;
@@ -100,7 +100,7 @@ button:hover {
 /* --------------------------------------------- */
 
 .bold {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .no-gap {

@@ -9,13 +9,13 @@ function Menu() {
       <Logo className='large-logo' />
       <div className='flex-column'>
         <Link to='/newgame'>
-          <button className='large-button'>START GAME</button>
+          <button className='button large-button'>START GAME</button>
         </Link>
-        <button className='large-button'>LOGIN</button>{' '}
+        <button className='button large-button'>LOGIN</button>{' '}
         {/* Login button needs to be changed to a component */}
         <div className='flex-row'>
-          <button className='small-button large-text'>?</button>
-          <button className='medium-button'>SETTINGS</button>
+          <button className='button small-button large-text'>?</button>
+          <button className='button medium-button'>SETTINGS</button>
         </div>
       </div>
     </div>

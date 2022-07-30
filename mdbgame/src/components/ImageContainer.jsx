@@ -3,7 +3,7 @@ import { ReactComponent as Empty } from '../images/empty_profile_photo.svg';
 import './ImageContainer.css';
 
 function ImageContainer(props) {
-  console.log(props);
+  // console.log(props);
   const item = props.item;
   let size = props.size;
   const position = props.position || '';

@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
-import ImageContainer from './ImageContainer';
+import Top5Item from './Top5Item';
 import './TopInfo.css';
 
-function TopInfo({ top4 }) {
-  console.log('TopInfo credits:', top4);
-
+function TopInfo({ top5, setNewValue }) {
   return (
     <div className='top-info-container'>
       <h1 className='top-info-text'>Known for:</h1>
       <div className='flex-row top-info-movies'>
-        {top4.map((item) => {
+        {top5.map((item) => {
           return (
-            <ImageContainer
-              item={item}
-              size={'small'}
-              shadow={'small'}
-              playground={true}
-            />
+            <Top5Item key={item.id} item={item} setNewValue={setNewValue} />
           );
         })}
       </div>

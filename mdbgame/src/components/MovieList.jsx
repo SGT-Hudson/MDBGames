@@ -1,29 +1,36 @@
-import React, { useEffect } from 'react';
 import './MovieList.css';
 
 function MovieList({ credits }) {
   // console.log('Credits of current actor:', credits);
+  const handleClick = function (production) {
+    console.log('Movie clicked:', production);
+  };
+
   return (
     <>
       {credits.map((production) => {
         return (
-          <div className='movie-container'>
+          <button
+            className='movie-container'
+            key={production.id + ' ' + production.character}
+            onClick={() => handleClick(production)}
+          >
             {production.character === '' ? (
               <p>
-                <span className='bold'>{production.release_date}</span>
-                {' ---  '}
-                {production.title}
+                {production.release_date}
+                {' --- '}
+                <span className='bold'>{production.title}</span>
               </p>
             ) : (
               <p>
-                <span className='bold'>{production.release_date}</span>
-                {' ---  '}
-                {production.title}
+                {production.release_date}
+                {' --- '}
+                <span className='bold'>{production.title}</span>
                 <span className='grey-text'> as </span>
                 {`${production.character}`}
               </p>
             )}
-          </div>
+          </button>
         );
       })}
     </>

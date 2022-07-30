@@ -49,10 +49,10 @@ function GameInit() {
           {/* -------------------Bottom buttons---------------------- */}
           <div className='flex-row'>
             <Link to='/game' state={actors}>
-              <button className='large-button'>START GAME</button>
+              <button className='button large-button'>START GAME</button>
             </Link>
             <Link to='/'>
-              <button className='small-button large-text'> &lt;</button>
+              <button className='button small-button large-text'> &lt;</button>
             </Link>
           </div>
           {/* ------------------------------------------------------- */}

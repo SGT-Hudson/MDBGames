@@ -1,24 +1,21 @@
 .top-info-container {
-  /* background-color: var(--bubble); */
   width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 10px;
   position: relative;
-  /* margin-left: 20px;
-  border-radius: 18px;
-  width: 100%; */
 }
 
-.top-info-text {
-  width: 90%; /* Can be in percentage also. */
-  margin: 0 auto;
-  position: relative;
-  padding-bottom: 20px;
+.top-info-element {
+  background-color: var(--foreground);
+  border-radius: 20px;
+  width: 100%;
+  padding: 0;
+  border: none;
 }
 
 .top-info-movies {
-  width: 90%; /* Can be in percentage also. */
+  width: 90%;
   margin: 0 auto;
   position: relative;
 }

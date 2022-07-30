@@ -1,0 +1,22 @@
+.top5-button {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background-color: var(--bubble);
+  font-size: 1.9em;
+  font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  transition: color 0.1s ease-in-out;
+  font-weight: 900;
+}
+
+.top5-button:hover {
+  background-color: var(--image-background);
+  transition: color 0.1s ease-in-out;
+}
+/* background-color: var(--foreground);
+  border-radius: 18px;
+  width: 100%;
+  padding: 0;
+  border: none;
+} */
