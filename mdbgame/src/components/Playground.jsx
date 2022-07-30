@@ -15,12 +15,14 @@ function Playground({ actor }) {
 
   const getActorData = async (id) => {
     const actorData = await getActor(id);
+    console.log('Actor data:', actorData);
     setCurrentItem(actorData);
     setReady(true);
   };
   const getMovieData = async (id) => {
-    const actorData = await getMovie(id);
-    setCurrentItem(actorData);
+    const movieData = await getMovie(id);
+    console.log('Movie data:', movieData);
+    setCurrentItem(movieData);
     setReady(true);
   };
 
@@ -31,8 +33,10 @@ function Playground({ actor }) {
   useEffect(() => {
     console.log('newValue:', newValue);
     if (newValue[0] === 'actor' && ready === true) {
+      setReady(false);
       getActorData(newValue[1]);
     } else if (newValue[0] === 'movie' && ready === true) {
+      setReady(false);
       getMovieData(newValue[1]);
     }
   }, [newValue]);

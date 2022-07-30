@@ -6,6 +6,23 @@ const randActorPicker = (data) => {
   return data[randomActor];
 };
 
+const checkAdultContent = (actor) => {
+  if (actor.known_for) {
+    for (let i = 0; i < actor.known_for.length; i++) {
+      if (
+        ['ko', 'ja', 'th', 'zh'].includes(
+          actor.known_for[i].original_language
+        ) ||
+        actor.known_for[i].adult === true
+      ) {
+        console.log('hiiii', actor, i);
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
 export const newGame = async () => {
   const randomPage = Math.floor(Math.random() * maxPage + 1);
 
@@ -17,32 +34,24 @@ export const newGame = async () => {
   const actorList = data.results;
   // Randomly select two actors from the API response
   const actorPair = [{}, {}];
-  actorPair[0] = randActorPicker(actorList);
-  actorPair[1] = randActorPicker(actorList);
 
   // Ensure that the two actors don't have the adult flag set to true
-  const rasistSearch = actorPair.find((actor) => actor.adult === true);
-  console.log(actorPair);
-  while (
-    actorPair[0].adult === true ||
-    actorPair[0].known_for[0].original_language === 'ko' ||
-    actorPair[0].known_for[0].original_language === 'ja' ||
-    actorPair[0].known_for[0].original_language === 'th' ||
-    actorPair[0].known_for[0].original_language === 'zh'
-  ) {
+  do {
     actorPair[0] = randActorPicker(actorList);
-  }
-  while (
-    actorPair[1].adult === true ||
-    actorPair[1].known_for[0].original_language === 'ko' ||
-    actorPair[1].known_for[0].original_language === 'ja' ||
-    actorPair[1].known_for[0].original_language === 'th' ||
-    actorPair[1].known_for[0].original_language === 'zh' ||
-    actorPair[0].id === actorPair[1].id
-  ) {
-    actorPair[1] = randActorPicker(actorList);
-  }
+    console.log('0', actorPair[0]);
+    actorPair[0].adultContent = checkAdultContent(actorPair[0]);
+  } while (actorPair[0].adultContent === true);
 
+  do {
+    actorPair[1] = randActorPicker(actorList);
+    console.log('1', actorPair[1]);
+    actorPair[1].adultContent = checkAdultContent(actorPair[1]);
+  } while (
+    actorPair[1].adultContent === true ||
+    actorPair[0].id === actorPair[1].id
+  );
+
+  console.log(actorPair);
   //providing the actual image path
   actorPair[0].image = actorPair[0].profile_path
     ? image500 + actorPair[0].profile_path
@@ -86,7 +95,7 @@ export const getActor = async (id) => {
     return parseInt(a.release_date) >= parseInt(b.release_date) ? -1 : 1;
   });
 
-  // DELETING THE MOVIES THAT HAVE NO RELEASE DATE
+  // DELETING THE MOVIES THAT HAVE NO RELEASE DATE OR ARE ADULT CONTENT
   data.cast = data.combined_credits.cast.filter((production) => {
     return production.release_date !== '' && production.adult === false;
   });
@@ -98,7 +107,7 @@ export const getActor = async (id) => {
     })
     .slice(0, 5);
 
-  // DELETING THE OLD UNSORTED PRODUCTION LIST
+  // DELETING THE OLD UNFILTERED PRODUCTION LIST
   delete data.combined_credits;
 
   console.log('Actor API call: ', data);
@@ -112,48 +121,38 @@ export const getMovie = async (id) => {
   );
   const data = await response.json();
 
-  // PROVIDING THE ACTUAL IMAGE PATH
+  // PROVIDING THE ACTUAL IMAGE PATH AND ADDING THE NAME VALUE TO THE MOVIE
   data.poster_path = data.poster_path ? image500 + data.poster_path : null;
+  data.name = data.title;
 
   console.log('Movie API call: ', data);
-  return data;
 
-  // MODIFYING THE ACTOR'S MOVIES
-  data.combined_credits.cast.forEach((production) => {
-    if (production.media_type === 'tv') {
-      production.release_date = production.first_air_date.substring(0, 4);
-      production.title = production.name;
-    } else production.release_date = production.release_date.substring(0, 4);
-
-    if (production.poster_path)
-      production.image = image500 + production.poster_path;
-    else if (production.backdrop_path)
-      production.image = image500 + production.backdrop_path;
-    else production.image = null;
-
-    production.name = production.title;
+  // MODIFYING THE MOVIES'S ACTORS
+  data.credits.cast.forEach((actor) => {
+    if (actor.poster_path) actor.image = image500 + actor.poster_path;
+    else actor.image = null;
   });
 
-  // SORTING THE PRODUCTIONS BY RELEASE DATE
-  data.combined_credits.cast.sort((a, b) => {
-    return parseInt(a.release_date) >= parseInt(b.release_date) ? -1 : 1;
+  // SORTING THE ACTORS BY POPULARITY
+  data.credits.cast.sort((a, b) => {
+    return parseInt(a.popularity) >= parseInt(b.popularity) ? -1 : 1;
   });
 
-  // DELETING THE MOVIES THAT HAVE NO RELEASE DATE
-  data.cast = data.combined_credits.cast.filter((production) => {
-    return production.release_date !== '' && production.adult === false;
+  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
+  data.cast = data.credits.cast.filter((actor) => {
+    return actor.adult === false;
   });
 
-  // GETTING THE TOP 4 MOVIES
-  data.top5 = data.combined_credits.cast
+  // GETTING THE TOP 5 ACTORS
+  data.top5 = data.credits.cast
     .sort((a, b) => {
-      return a.vote_count >= b.vote_count ? -1 : 1;
+      return a.popularity >= b.popularity ? -1 : 1;
     })
     .slice(0, 5);
 
-  // DELETING THE OLD UNSORTED PRODUCTION LIST
-  delete data.combined_credits;
+  // DELETING THE OLD UNFILTERED CREDITS LIST
+  delete data.credits;
 
-  console.log('Actor API call: ', data);
+  console.log('Movie API call: ', data);
   return data;
 };
