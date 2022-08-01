@@ -9,16 +9,16 @@ function Settings() {
       <div className='menu-container'>
         <Logo className='large-logo' />
         <div className='flex-column'>
-          <button className='non-button large-button'>SETTINGS</button>
+          <button className='non-button large-button large-shadow'>
+            SETTINGS
+          </button>
 
           <button className='button large-button'>Work In Progress</button>
           <Link to='/'>
-            <button className='spaced-button button large-button'>
+            <button className='spaced-button button large-button large-shadow'>
               BACK TO MENU
             </button>
           </Link>
-
-          {/* Login button needs to be changed to a component */}
         </div>
       </div>
     </>

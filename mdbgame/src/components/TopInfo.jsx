@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Top5Item from './Top5Item';
 import './TopInfo.css';
 

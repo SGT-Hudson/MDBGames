@@ -26,13 +26,17 @@ const checkAdultContent = (actor) => {
 
 export const newGame = async () => {
   const randomPage = Math.floor(Math.random() * maxPage + 1);
-  console.log('hiiiiiiiiiasdfasdf', image500);
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
-  );
-  const data = await response.json();
-  console.log(data);
+  let data;
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
+    );
+    data = await response.json();
+  } catch (error) {
+    console.log('New Game error', error);
+  }
+
   const actorList = data.results;
   // Randomly select two actors from the API response
   const actorPair = [{}, {}];
@@ -68,10 +72,15 @@ export const newGame = async () => {
 
 export const getActorAPI = async (id) => {
   // GETTING THE DATA FROM THE API
-  const response = await fetch(
-    `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=combined_credits`
-  );
-  const data = await response.json();
+  let data;
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=combined_credits`
+    );
+    data = await response.json();
+  } catch (error) {
+    console.log('getActorAPI error', error);
+  }
 
   // PROVIDING THE ACTUAL IMAGE PATH AND A TYPE OF CONTENT
   data.type = 'actor';
@@ -119,11 +128,16 @@ export const getActorAPI = async (id) => {
 
 export const getMovieAPI = async (id) => {
   // GETTING THE DATA FROM THE API
+  let data;
 
-  const response = await fetch(
-    `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=credits`
-  );
-  const data = await response.json();
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=credits`
+    );
+    data = await response.json();
+  } catch (error) {
+    console.log('Movie API error', error);
+  }
 
   // PROVIDING THE ACTUAL IMAGE PATH AND ADDING THE NAME VALUE TO THE MOVIE
   data.type = 'movie';

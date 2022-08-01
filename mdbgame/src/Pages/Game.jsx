@@ -1,9 +1,7 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Playground from '../components/Playground';
-
-import './Game.css';
 
 function Game() {
   const location = useLocation();

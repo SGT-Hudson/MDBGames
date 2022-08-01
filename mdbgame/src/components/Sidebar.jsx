@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Timer from '../components/Timer';
 import ImageContainer from '../components/ImageContainer';
 import { ReactComponent as Logo } from '../images/logo.svg';
@@ -23,7 +23,7 @@ function Sidebar({ actor, end }) {
           state={[actor, end, null, timer]}
           style={{ textDecoration: 'none' }}
         >
-          <div className='give-up large-shadow'>
+          <div className='give-up'>
             <p>Give Up</p>
           </div>
         </Link>

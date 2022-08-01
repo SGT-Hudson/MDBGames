@@ -30,10 +30,16 @@ function HowTo() {
               the end!
             </h2>
           </li>
+          <li>
+            <h2>
+              You can end the game at any time by pressing the "give up" button
+              in the bottom left corner.
+            </h2>
+          </li>
         </ul>
       </div>
       <Link to='/' style={{ textDecoration: 'none' }}>
-        <button className='spaced-button button large-button'>
+        <button className='spaced-button button large-button large-shadow'>
           BACK TO MENU
         </button>
       </Link>
