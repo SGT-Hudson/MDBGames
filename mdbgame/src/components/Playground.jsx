@@ -47,9 +47,10 @@ function Playground({ value, end }) {
     setPath([...path, name]);
     console.log('Path: ', path);
 
-    if (type === 'actor' && id === 527313) {
+    if (type === 'actor' && id === end.id) {
       console.log('End screen!!!');
       navigate('/endscreen', {
+        replace: true,
         state: [value, end, [...path, end.name], time],
       });
     } else getData();

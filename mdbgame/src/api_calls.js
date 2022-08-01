@@ -1,5 +1,5 @@
 const image500 = 'https://image.tmdb.org/t/p/w500';
-const maxPage = 10;
+const maxPage = 1;
 
 const randActorPicker = (data) => {
   const randomActor = Math.floor(Math.random() * 21);
@@ -31,7 +31,7 @@ export const newGame = async () => {
     `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
   );
   const data = await response.json();
-
+  console.log(data);
   const actorList = data.results;
   // Randomly select two actors from the API response
   const actorPair = [{}, {}];

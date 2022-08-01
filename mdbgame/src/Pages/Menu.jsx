@@ -8,13 +8,15 @@ function Menu() {
     <div className='menu-container'>
       <Logo className='large-logo' />
       <div className='flex-column'>
-        <Link to='/newgame'>
-          <button className='button large-button'>START GAME</button>
+        <Link to='/newgame' className='button large-button'>
+          START GAME{' '}
         </Link>
         <button className='button large-button'>LOGIN</button>{' '}
         {/* Login button needs to be changed to a component */}
         <div className='flex-row'>
-          <button className='button small-button large-text'>?</button>
+          <Link className='button small-button large-text' to='/settings'>
+            ?
+          </Link>
           <button className='button medium-button'>SETTINGS</button>
         </div>
       </div>

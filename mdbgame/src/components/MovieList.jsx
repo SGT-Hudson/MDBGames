@@ -1,11 +1,6 @@
 import './MovieList.css';
 
 function MovieList({ credits, setNewValue }) {
-  // console.log('Credits of current actor:', credits);
-  const handleClick = function (production) {
-    console.log('Movie clicked:', production);
-  };
-
   return (
     <>
       {credits.map((production) => {

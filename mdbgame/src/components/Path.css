@@ -1,0 +1,21 @@
+.path {
+  margin: auto;
+  text-align: center;
+  width: 90%;
+}
+
+.top-text {
+  padding: 1em 5% 0 5%;
+  width: 90%;
+  justify-content: space-between;
+}
+
+.end-middle-section-text {
+  width: 35vw;
+  height: 47%;
+  margin-bottom: 5%;
+  justify-content: flex-start;
+  align-content: space-between;
+  background-color: var(--foreground);
+  border-radius: 18px;
+}

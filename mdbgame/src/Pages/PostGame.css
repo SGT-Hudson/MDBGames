@@ -1,26 +1,12 @@
 .end-middle-section {
   justify-content: center;
-}
-
-.end-middle-section-text {
-  width: 35vw;
-  margin: 0;
-  justify-content: flex-start;
-  align-content: space-between;
-  background-color: var(--foreground);
-  border-radius: 18px;
+  gap: 2em;
 }
 
 .end-logo {
   width: 100%;
   margin-top: 2em;
   text-align: center;
-}
-
-.top-text {
-  padding: 1em 5%;
-  width: 90%;
-  justify-content: space-between;
 }
 
 .end-buttons {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import ImageContainer from '../components/ImageContainer';
+import Path from '../components/Path';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import './PostGame.css';
 
@@ -17,13 +18,6 @@ function PostGame() {
   const timeString = Math.round(timeDiff) + ' seconds';
 
   console.log(path);
-  const initPath = path.splice(0, 1);
-  const endPath = path.splice(-1);
-
-  console.log(initPath, endPath);
-
-  const pathString = path.join(' > ');
-  console.log(pathString);
 
   console.log('Data from Location: ', data);
 
@@ -37,16 +31,9 @@ function PostGame() {
             {/* -------------------Middle section---------------------- */}
             <div className='flex-row end-middle-section'>
               <ImageContainer item={startingActor} size={'large'} />
-              <div className='flex-column end-middle-section-text small-shadow'>
-                <div className='flex-row top-text'>
-                  <h2>Your path</h2>
-                  <h2>Time: {timeString}</h2>
-                </div>
-                <p className='bold'>
-                  {initPath}
-                  <span className='unbold'>{' > ' + pathString + ' > '}</span>
-                  {endPath}
-                </p>
+              <div>
+                <Path path={path} time={timeString} best={false} />
+                <Path path={path} time={timeString} best={true} />
               </div>
               <ImageContainer item={endingActor} size={'large'} />
             </div>
