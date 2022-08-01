@@ -1,5 +1,6 @@
 .top5-button {
-  width: 100%;
+  display: flex;
+  width: 190px;
   height: 100%;
   border: none;
   background-color: var(--bubble);
@@ -13,6 +14,13 @@
 .top5-button:hover {
   background-color: var(--image-background);
   transition: color 0.1s ease-in-out;
+}
+
+.super-small-portrait-image {
+  width: 170px;
+  height: 255px;
+  border-radius: 12px;
+  box-shadow: 0px 0px 12px -3px rgba(0, 0, 0, 0.75);
 }
 /* background-color: var(--foreground);
   border-radius: 18px;

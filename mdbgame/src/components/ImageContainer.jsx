@@ -1,9 +1,9 @@
 import React from 'react';
-import { ReactComponent as Empty } from '../images/empty_profile_photo.svg';
+import { ReactComponent as EmptyActor } from '../images/empty_profile_photo.svg';
+import { ReactComponent as EmptyMovie } from '../images/empty_movie_photo.svg';
 import './ImageContainer.css';
 
 function ImageContainer(props) {
-  // console.log(props);
   const item = props.item;
   let size = props.size;
   const position = props.position || '';
@@ -38,7 +38,7 @@ function ImageContainer(props) {
               />
             ) : (
               <div className={`${size}-portrait-image empty-image`}>
-                <Empty />
+                {item.type === 'actor' ? <EmptyActor /> : <EmptyMovie />}
               </div>
             )}
           </div>

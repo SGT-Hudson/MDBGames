@@ -12,8 +12,8 @@ function App() {
     <>
       <Routes>
         <Route exact path='/' element={<Menu />} />
-        <Route path='/game' element={<Game />} />
         <Route path='/newgame' element={<GameInit />} />
+        <Route path='/game' element={<Game />} />
         <Route path='/endscreen' element={<PostGame />} />
       </Routes>
     </>

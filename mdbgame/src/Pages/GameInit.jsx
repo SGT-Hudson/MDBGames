@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as Arrows } from '../images/arrows.svg';
 
-import PortraitContainer from '../components/ImageContainer';
+import ImageContainer from '../components/ImageContainer';
 
 import { newGame } from '../api_calls';
 import './GameInit.css';
@@ -30,17 +30,13 @@ function GameInit() {
           <Logo className='large-logo' />
           {/* -------------------Middle section---------------------- */}
           <div className='flex-row start-middle-section'>
-            <PortraitContainer
-              item={actors[0]}
-              size={'large'}
-              position={'left'}
-            />
+            <ImageContainer item={actors[0]} size={'large'} position={'left'} />
 
             <div className='arrows'>
               <Arrows />
             </div>
 
-            <PortraitContainer
+            <ImageContainer
               item={actors[1]}
               size={'large'}
               position={'right'}

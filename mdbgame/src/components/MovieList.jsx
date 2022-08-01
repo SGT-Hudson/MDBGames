@@ -1,6 +1,6 @@
 import './MovieList.css';
 
-function MovieList({ credits }) {
+function MovieList({ credits, setNewValue }) {
   // console.log('Credits of current actor:', credits);
   const handleClick = function (production) {
     console.log('Movie clicked:', production);
@@ -13,7 +13,9 @@ function MovieList({ credits }) {
           <button
             className='movie-container'
             key={production.id + ' ' + production.character}
-            onClick={() => handleClick(production)}
+            onClick={() =>
+              setNewValue([production.type, production.id, production.name])
+            }
           >
             {production.character === '' ? (
               <p>

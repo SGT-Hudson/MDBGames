@@ -5,7 +5,11 @@ import './TopInfo.css';
 function TopInfo({ top5, setNewValue }) {
   return (
     <div className='top-info-container'>
-      <h1 className='top-info-text'>Known for:</h1>
+      {top5[0].type === 'actor' ? (
+        <h1 className='top-info-text'>Top 5 actors:</h1>
+      ) : (
+        <h1 className='top-info-text'>Known for:</h1>
+      )}
       <div className='flex-row top-info-movies'>
         {top5.map((item) => {
           return (

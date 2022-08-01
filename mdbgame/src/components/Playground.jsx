@@ -1,44 +1,58 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { getActor, getMovie } from '../api_calls';
+import React, { useState, useEffect } from 'react';
+import { getActorAPI, getMovieAPI, getTvAPI } from '../api_calls';
 import ImageContainer from './ImageContainer';
 import TopInfo from './TopInfo';
 import './Playground.css';
 import MovieList from './MovieList';
-import ActorList from './ActorList';
 import Top5Item from './Top5Item';
+import { useNavigate } from 'react-router-dom';
 
-function Playground({ actor }) {
-  const [currentItem, setCurrentItem] = useState({});
+function Playground({ value, end }) {
   const [ready, setReady] = useState(false);
-  const [newValue, setNewValue] = useState(['actor', actor]);
+  const [currentItem, setCurrentItem] = useState({});
+  const [newValue, setNewValue] = useState(['actor', value.id, value.name]);
+  const [path, setPath] = useState([]);
+  const [time, setTime] = useState(new Date().getTime());
 
-  const getActorData = async (id) => {
-    const actorData = await getActor(id);
-    console.log('Actor data:', actorData);
-    setCurrentItem(actorData);
-    setReady(true);
-  };
-  const getMovieData = async (id) => {
-    const movieData = await getMovie(id);
-    console.log('Movie data:', movieData);
-    setCurrentItem(movieData);
-    setReady(true);
-  };
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    getActorData(actor.id);
-  }, []);
+  const getNewData = async () => {
+    setReady(false);
+    const type = newValue[0];
+    const id = newValue[1];
 
-  useEffect(() => {
-    console.log('newValue:', newValue);
-    if (newValue[0] === 'actor' && ready === true) {
-      setReady(false);
-      getActorData(newValue[1]);
-    } else if (newValue[0] === 'movie' && ready === true) {
-      setReady(false);
-      getMovieData(newValue[1]);
+    if (type === 'actor') {
+      const actorData = await getActorAPI(id);
+      setCurrentItem(actorData);
+    } else if (type === 'movie') {
+      const movieData = await getMovieAPI(id);
+      setCurrentItem(movieData);
+    } else if (type === 'tv') {
+      const tvData = await getTvAPI(id);
+
+      setCurrentItem(tvData);
     }
+    setReady(true);
+  };
+
+  useEffect(() => {
+    const type = newValue[0];
+    const id = newValue[1];
+    const name = newValue[2];
+    const getData = async () => {
+      await getNewData();
+    };
+
+    console.log('newValue:', newValue);
+    setPath([...path, name]);
+    console.log('Path: ', path);
+
+    if (type === 'actor' && id === 527313) {
+      console.log('End screen!!!');
+      navigate('/endscreen', {
+        state: [value, end, [...path, end.name], time],
+      });
+    } else getData();
   }, [newValue]);
 
   return (
@@ -54,7 +68,7 @@ function Playground({ actor }) {
 
             <TopInfo top5={currentItem.top5} setNewValue={setNewValue} />
           </div>
-          {currentItem.gender ? (
+          {currentItem.type === 'actor' && ready ? (
             <div>
               <h1 className='movie-list-title'>Starred in:</h1>
               <MovieList credits={currentItem.cast} setNewValue={setNewValue} />
@@ -67,7 +81,7 @@ function Playground({ actor }) {
                   return (
                     <Top5Item
                       key={actor.id}
-                      actor={actor}
+                      item={actor}
                       setNewValue={setNewValue}
                     />
                   );

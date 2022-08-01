@@ -9,6 +9,7 @@ const randActorPicker = (data) => {
 const checkAdultContent = (actor) => {
   if (actor.known_for) {
     for (let i = 0; i < actor.known_for.length; i++) {
+      //there is a lot of adult content not tagged as adult from this coutries
       if (
         ['ko', 'ja', 'th', 'zh'].includes(
           actor.known_for[i].original_language
@@ -64,14 +65,15 @@ export const newGame = async () => {
   return actorPair;
 };
 
-export const getActor = async (id) => {
+export const getActorAPI = async (id) => {
   // GETTING THE DATA FROM THE API
   const response = await fetch(
     `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=combined_credits`
   );
   const data = await response.json();
 
-  // PROVIDING THE ACTUAL IMAGE PATH
+  // PROVIDING THE ACTUAL IMAGE PATH AND A TYPE OF CONTENT
+  data.type = 'actor';
   data.image = data.profile_path ? image500 + data.profile_path : null;
 
   // MODIFYING THE ACTOR'S MOVIES
@@ -88,6 +90,7 @@ export const getActor = async (id) => {
     else production.image = null;
 
     production.name = production.title;
+    production.type = production.media_type;
   });
 
   // SORTING THE PRODUCTIONS BY RELEASE DATE
@@ -106,7 +109,6 @@ export const getActor = async (id) => {
       return a.vote_count >= b.vote_count ? -1 : 1;
     })
     .slice(0, 5);
-
   // DELETING THE OLD UNFILTERED PRODUCTION LIST
   delete data.combined_credits;
 
@@ -114,28 +116,28 @@ export const getActor = async (id) => {
   return data;
 };
 
-export const getMovie = async (id) => {
+export const getMovieAPI = async (id) => {
   // GETTING THE DATA FROM THE API
+
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=credits`
   );
   const data = await response.json();
 
   // PROVIDING THE ACTUAL IMAGE PATH AND ADDING THE NAME VALUE TO THE MOVIE
-  data.poster_path = data.poster_path ? image500 + data.poster_path : null;
-  data.name = data.title;
+  data.type = 'movie';
+  if (data.poster_path) data.image = image500 + data.poster_path;
+  else if (data.backdrop_path) data.image = image500 + data.backdrop_path;
+  else data.image = null;
 
-  console.log('Movie API call: ', data);
+  data.name = data.title;
 
   // MODIFYING THE MOVIES'S ACTORS
   data.credits.cast.forEach((actor) => {
-    if (actor.poster_path) actor.image = image500 + actor.poster_path;
+    if (actor.profile_path) actor.image = image500 + actor.profile_path;
     else actor.image = null;
-  });
 
-  // SORTING THE ACTORS BY POPULARITY
-  data.credits.cast.sort((a, b) => {
-    return parseInt(a.popularity) >= parseInt(b.popularity) ? -1 : 1;
+    actor.type = 'actor';
   });
 
   // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
@@ -143,16 +145,50 @@ export const getMovie = async (id) => {
     return actor.adult === false;
   });
 
-  // GETTING THE TOP 5 ACTORS
-  data.top5 = data.credits.cast
-    .sort((a, b) => {
-      return a.popularity >= b.popularity ? -1 : 1;
-    })
-    .slice(0, 5);
+  // SPLITTING THE TOP 5 ACTORS
+  data.top5 = data.credits.cast.splice(0, 5);
+  data.cast = data.credits.cast;
 
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;
 
   console.log('Movie API call: ', data);
+  return data;
+};
+
+export const getTvAPI = async (id) => {
+  // GETTING THE DATA FROM THE API
+  const response = await fetch(
+    `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_API_KEY}&append_to_response=aggregate_credits`
+  );
+  const data = await response.json();
+
+  // PROVIDING THE ACTUAL IMAGE PATH AND ADDING THE NAME VALUE TO THE MOVIE
+  data.type = 'tv';
+  if (data.poster_path) data.image = image500 + data.poster_path;
+  else if (data.backdrop_path) data.image = image500 + data.backdrop_path;
+  else data.image = null;
+
+  // MODIFYING THE MOVIES'S ACTORS
+  data.aggregate_credits.cast.forEach((actor) => {
+    if (actor.profile_path) actor.image = image500 + actor.profile_path;
+    else actor.image = null;
+
+    actor.type = 'actor';
+  });
+
+  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
+  data.aggregate_credits.cast.filter((actor) => {
+    return actor.adult === false;
+  });
+
+  // GETTING THE TOP 5 ACTORS
+  data.top5 = data.aggregate_credits.cast.splice(0, 5);
+  data.cast = data.aggregate_credits.cast;
+
+  // DELETING THE OLD UNFILTERED CREDITS LIST
+  delete data.credits;
+
+  console.log('TV API call: ', data);
   return data;
 };
