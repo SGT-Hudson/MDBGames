@@ -73,6 +73,7 @@ code {
   transition: color 0.1s ease-in-out;
   font-weight: 900;
 }
+
 .button:hover {
   background-color: var(--blue);
   color: var(--background);
@@ -90,6 +91,7 @@ code {
 }
 
 .small-button {
+  letter-spacing: 0;
   width: 72px;
   height: 72px;
 }

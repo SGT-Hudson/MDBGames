@@ -49,9 +49,10 @@ function Playground({ value, end }) {
 
     if (type === 'actor' && id === end.id) {
       console.log('End screen!!!');
+      const timeInSec = Math.round((Date.now() - time) / 1000);
       navigate('/endscreen', {
         replace: true,
-        state: [value, end, [...path, end.name], time],
+        state: [value, end, [...path, end.name], timeInSec],
       });
     } else getData();
   }, [newValue]);

@@ -1,0 +1,11 @@
+.non-button {
+  border: 8px solid var(--blue);
+  border-radius: 18px;
+  font-size: 1.9em;
+  letter-spacing: 0.085em;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--blue);
+  color: var(--background);
+  transition: color 0.1s ease-in-out;
+  font-weight: 900;
+}

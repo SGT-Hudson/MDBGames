@@ -12,14 +12,22 @@ function PostGame() {
   const endingActor = data[1];
   const path = data[2];
   const time = data[3];
+  console.log(time);
 
-  const currentTime = new Date().getTime();
-  const timeDiff = (currentTime - time) / 1000;
-  const timeString = Math.round(timeDiff) + ' seconds';
+  let displayTime;
+  let timeString;
 
-  console.log(path);
+  if (time > 3599) {
+    displayTime = new Date(time * 1000).toISOString().slice(-13, -5);
+    timeString = displayTime + ' hours';
+  } else if (time > 59) {
+    displayTime = new Date(time * 1000).toISOString().slice(-10, -5);
+    timeString = displayTime + ' minutes';
+  } else {
+    timeString = time + ' seconds';
+  }
 
-  console.log('Data from Location: ', data);
+  console.log('Data from Location: ', startingActor, endingActor, path, time);
 
   return (
     <>

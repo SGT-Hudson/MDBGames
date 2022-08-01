@@ -14,11 +14,11 @@ function App() {
     <>
       <Routes>
         <Route exact path='/' element={<Menu />} />
-        <Route path='/settings' element={<Settings />} />
-        <Route path='/howto' element={<HowTo />} />
-        <Route path='/newgame' element={<GameInit />} />
-        <Route path='/game' element={<Game />} />
-        <Route path='/endscreen' element={<PostGame />} />
+        <Route exact path='/settings' element={<Settings />} />
+        <Route exact path='/howto' element={<HowTo />} />
+        <Route exact path='/newgame' element={<GameInit />} />
+        <Route exact path='/game' element={<Game />} />
+        <Route exact path='/endscreen' element={<PostGame />} />
       </Routes>
     </>
   );
