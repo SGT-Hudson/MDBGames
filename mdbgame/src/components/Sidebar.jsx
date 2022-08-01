@@ -15,15 +15,19 @@ function Sidebar({ actor, end }) {
         <h1 className='bold sidebar-text'>Find this actor</h1>
         <ImageContainer item={actor} size={'small'} />
       </div>
-      <Timer timer={timer} setTimer={setTimer} />
+      <div className='flex-column'>
+        <Timer timer={timer} setTimer={setTimer} />
 
-      <Link
-        to='/endscreen'
-        state={[actor, end, null, timer]}
-        className='give-up'
-      >
-        Give Up
-      </Link>
+        <Link
+          to='/endscreen'
+          state={[actor, end, null, timer]}
+          style={{ textDecoration: 'none' }}
+        >
+          <div className='give-up large-shadow'>
+            <p>Give Up</p>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

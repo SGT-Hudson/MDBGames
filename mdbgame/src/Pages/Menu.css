@@ -3,5 +3,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  padding-top: 8vw;
+}
+
+.menu-logo {
+  padding-top: 20vh;
 }

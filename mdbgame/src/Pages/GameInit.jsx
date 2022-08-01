@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as Arrows } from '../images/arrows.svg';
+import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 
 import ImageContainer from '../components/ImageContainer';
 
@@ -48,7 +49,10 @@ function GameInit() {
               <button className='button large-button'>START GAME</button>
             </Link>
             <Link to='/'>
-              <button className='button small-button large-text'> &lt;</button>
+              <button className='button small-button large-text svg-color'>
+                {/* &lt; */}
+                <ArrowBack className='arrow-back' />
+              </button>
             </Link>
           </div>
           {/* ------------------------------------------------------- */}

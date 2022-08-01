@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ImageContainer from '../components/ImageContainer';
 import Path from '../components/Path';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 import './PostGame.css';
 
 function PostGame() {
@@ -51,9 +52,8 @@ function PostGame() {
                 <button className='button large-button'>NEW GAME</button>
               </Link>
               <Link to='/'>
-                <button className='button small-button large-text'>
-                  {' '}
-                  &lt;
+                <button className='button small-button large-text svg-color'>
+                  <ArrowBack className='arrow-back' />
                 </button>
               </Link>
             </div>

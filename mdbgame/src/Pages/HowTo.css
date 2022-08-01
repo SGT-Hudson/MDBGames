@@ -3,26 +3,13 @@
   background-color: var(--foreground);
   border-radius: 18px;
   padding: 3rem;
+  margin: 0 5vw 15px 5vw;
+}
+
+.how-to-bubble > h1 {
+  margin-top: 0;
 }
 
 .centered {
   text-align: center;
-}
-
-.ex {
-  width: 1.5em;
-  height: 1.5em;
-  border: 3px solid var(--blue);
-  padding: 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 0;
-  border-radius: 50px;
-  color: var(--blue);
-  font-size: 1.5em;
-  font-weight: bold;
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
 }

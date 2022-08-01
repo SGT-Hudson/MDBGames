@@ -17,6 +17,12 @@ img {
   gap: 5em;
 }
 
+.arrow-back {
+  padding: 6px 1px 6px 0px;
+}
+.svg-color:hover path {
+  fill: var(--background);
+}
 .arrows {
   width: 400px;
   height: 129px;

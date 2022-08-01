@@ -6,7 +6,7 @@ function TopInfo({ top5, setNewValue }) {
   return (
     <div className='top-info-container'>
       {top5[0].type === 'actor' ? (
-        <h1 className='top-info-text'>Top 5 actors:</h1>
+        <h1 className='top-info-text'>Top actors:</h1>
       ) : (
         <h1 className='top-info-text'>Known for:</h1>
       )}

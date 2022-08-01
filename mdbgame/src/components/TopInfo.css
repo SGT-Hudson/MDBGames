@@ -14,8 +14,12 @@
   border: none;
 }
 
+.top-info-text {
+  width: 90%;
+  margin: 30px auto;
+}
+
 .top-info-movies {
   width: 90%;
   margin: 0 auto;
-  position: relative;
 }

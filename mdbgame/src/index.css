@@ -13,7 +13,8 @@ code {
 }
 
 :root {
-  --blue: #82b8ff;
+  --blue: rgb(130, 184, 255);
+  --transparent-blue: rgba(130, 184, 255, 0.5);
   --letters: #fff;
   --background: #1f1f1f;
   --foreground: #333333;

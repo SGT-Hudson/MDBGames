@@ -5,22 +5,23 @@ import './Settings.css';
 
 function Settings() {
   return (
-    <div className='menu-container'>
-      <Logo className='large-logo' />
-      <div className='flex-column'>
-        <div className='flex-row'>
-          <button className='non-button medium-button'>SETTINGS</button>
+    <>
+      <div className='menu-container'>
+        <Logo className='large-logo' />
+        <div className='flex-column'>
+          <button className='non-button large-button'>SETTINGS</button>
 
+          <button className='button large-button'>Work In Progress</button>
           <Link to='/'>
-            <button className='button small-button large-text'>&lt;</button>
+            <button className='spaced-button button large-button'>
+              BACK TO MENU
+            </button>
           </Link>
+
+          {/* Login button needs to be changed to a component */}
         </div>
-
-        <button className='button large-button'>Work In Progress</button>
-
-        {/* Login button needs to be changed to a component */}
       </div>
-    </div>
+    </>
   );
 }
 

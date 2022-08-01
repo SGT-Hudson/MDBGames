@@ -9,7 +9,7 @@
   width: 238px;
 
   background-color: var(--bubble);
-  border-radius: 18px;
+  border-radius: 13px;
   display: flex;
   justify-content: center;
   flex-direction: column;

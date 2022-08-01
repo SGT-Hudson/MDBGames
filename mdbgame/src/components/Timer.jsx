@@ -21,7 +21,7 @@ function Timer({ timer, setTimer }) {
   return (
     <div className='timer-container'>
       <p className='blue-text timer-text bold large-text'>Timer</p>
-      <div className='timer'>
+      <div className='timer large-shadow'>
         <p className='timer-text  bold large-text'>{useTimer()}</p>
       </div>
     </div>

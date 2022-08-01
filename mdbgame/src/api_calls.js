@@ -1,4 +1,4 @@
-const image500 = 'https://image.tmdb.org/t/p/w500';
+const image500 = process.env.REACT_APP_API_IMAGE;
 const maxPage = 1;
 
 const randActorPicker = (data) => {
@@ -26,6 +26,7 @@ const checkAdultContent = (actor) => {
 
 export const newGame = async () => {
   const randomPage = Math.floor(Math.random() * maxPage + 1);
+  console.log('hiiiiiiiiiasdfasdf', image500);
 
   const response = await fetch(
     `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`

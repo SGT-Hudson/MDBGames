@@ -8,13 +8,6 @@ function HowTo() {
     <div className='menu-container'>
       <Logo className='large-logo' />
       <div className='how-to-bubble'>
-        <Link
-          to='/'
-          className='ex-container'
-          style={{ textDecoration: 'none' }}
-        >
-          <div className='ex'>X</div>
-        </Link>
         <h1 className='bold centered'>How to play</h1>
         <ul>
           <li>
@@ -39,6 +32,11 @@ function HowTo() {
           </li>
         </ul>
       </div>
+      <Link to='/' style={{ textDecoration: 'none' }}>
+        <button className='spaced-button button large-button'>
+          BACK TO MENU
+        </button>
+      </Link>
     </div>
   );
 }
