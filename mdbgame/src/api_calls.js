@@ -2,7 +2,7 @@ const image500 = process.env.REACT_APP_API_IMAGE;
 const maxPage = 1;
 
 const randActorPicker = (data) => {
-  const randomActor = Math.floor(Math.random() * 21);
+  const randomActor = Math.floor(Math.random() * 20);
   return data[randomActor];
 };
 
@@ -16,7 +16,6 @@ const checkAdultContent = (actor) => {
         ) ||
         actor.known_for[i].adult === true
       ) {
-        console.log('hiiii', actor, i);
         return true;
       }
     }
@@ -44,20 +43,17 @@ export const newGame = async () => {
   // Ensure that the two actors don't have the adult flag set to true
   do {
     actorPair[0] = randActorPicker(actorList);
-    console.log('0', actorPair[0]);
     actorPair[0].adultContent = checkAdultContent(actorPair[0]);
   } while (actorPair[0].adultContent === true);
 
   do {
     actorPair[1] = randActorPicker(actorList);
-    console.log('1', actorPair[1]);
     actorPair[1].adultContent = checkAdultContent(actorPair[1]);
   } while (
     actorPair[1].adultContent === true ||
     actorPair[0].id === actorPair[1].id
   );
 
-  console.log(actorPair);
   //providing the actual image path
   actorPair[0].image = actorPair[0].profile_path
     ? image500 + actorPair[0].profile_path

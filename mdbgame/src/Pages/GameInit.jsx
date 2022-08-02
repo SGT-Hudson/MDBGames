@@ -20,7 +20,6 @@ function GameInit() {
     };
 
     createNewGame();
-    console.log('Actors from GameInit:', actors);
   }, []);
 
   return (

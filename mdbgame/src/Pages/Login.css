@@ -1,0 +1,77 @@
+.login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.flex-center {
+  align-self: center;
+}
+.gap-bottom {
+  margin-bottom: 10px;
+}
+
+.form-text {
+  margin-left: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: var(--blue);
+}
+.login-form > input {
+  background-color: var(--background);
+  width: 340px;
+  height: 56px;
+  border: 4px solid var(--blue);
+  border-radius: 18px;
+  letter-spacing: 0.085em;
+  text-align: center;
+  padding: 0 10px;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: white;
+}
+.google-icon {
+  width: 30px;
+  height: 30px;
+}
+.google-login {
+  margin-top: 20px;
+  width: 376px;
+  height: 72px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.line {
+  margin: 20px 0px;
+  width: 250px;
+  height: 3px;
+  background-color: var(--blue);
+}
+
+.padding-top-logo {
+  padding-top: 8vh;
+}
+
+.login-button {
+  padding: 0 20px;
+  height: 72px;
+}
+
+.login-button-container {
+  margin: 10px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}

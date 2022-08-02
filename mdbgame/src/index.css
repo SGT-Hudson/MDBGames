@@ -69,11 +69,11 @@ code {
   font-size: 1.9em;
   letter-spacing: 0.085em;
   font-family: 'Roboto', sans-serif;
-  background-color: var(--background);
   color: var(--blue);
+  font-weight: 900;
+  background-color: var(--background);
   cursor: pointer;
   transition: color 0.1s ease-in-out;
-  font-weight: 900;
 }
 
 .button:hover {

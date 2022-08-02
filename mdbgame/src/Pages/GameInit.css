@@ -18,7 +18,7 @@ img {
 }
 
 .arrow-back {
-  padding: 6px 1px 6px 0px;
+  padding: 6px 3px 6px 0px;
 }
 .svg-color:hover path {
   fill: var(--background);
