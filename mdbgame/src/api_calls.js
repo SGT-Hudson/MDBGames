@@ -32,9 +32,7 @@ export const newGame = async () => {
       `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
     );
     data = await response.json();
-  } catch (error) {
-    console.log('New Game error', error);
-  }
+  } catch (error) {}
 
   const actorList = data.results;
   // Randomly select two actors from the API response
@@ -42,12 +40,14 @@ export const newGame = async () => {
 
   // Ensure that the two actors don't have the adult flag set to true
   do {
-    actorPair[0] = randActorPicker(actorList);
+    actorPair[0] = actorList[9];
+    // randActorPicker(actorList);
     actorPair[0].adultContent = checkAdultContent(actorPair[0]);
   } while (actorPair[0].adultContent === true);
 
   do {
-    actorPair[1] = randActorPicker(actorList);
+    actorPair[1] = actorList[2];
+    // randActorPicker(actorList);
     actorPair[1].adultContent = checkAdultContent(actorPair[1]);
   } while (
     actorPair[1].adultContent === true ||
@@ -118,7 +118,6 @@ export const getActorAPI = async (id) => {
   // DELETING THE OLD UNFILTERED PRODUCTION LIST
   delete data.combined_credits;
 
-  console.log('Actor API call: ', data);
   return data;
 };
 
@@ -163,7 +162,6 @@ export const getMovieAPI = async (id) => {
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;
 
-  console.log('Movie API call: ', data);
   return data;
 };
 
@@ -200,6 +198,5 @@ export const getTvAPI = async (id) => {
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;
 
-  console.log('TV API call: ', data);
   return data;
 };

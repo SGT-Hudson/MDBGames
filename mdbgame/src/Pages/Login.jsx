@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   signInWithGoogle,
@@ -11,12 +12,12 @@ import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
-  // const [errorToggle, setErrorToggle] = useState(false);
+
   const [login, setLogin] = useState(false);
 
   const handleGoogleLogin = async () => {
     await signInWithGoogle();
-    navigate('/');
+    navigate('/profile');
   };
 
   const handleSubmit = async (e) => {
@@ -25,8 +26,13 @@ function Login() {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    if (login) await logInWithEmail(email, password);
-    else await registerWithEmail(email, password);
+    if (login) {
+      await logInWithEmail(email, password);
+      navigate('/profile');
+    } else {
+      await registerWithEmail(email, password);
+      navigate('/profile');
+    }
   };
 
   return (
@@ -78,7 +84,7 @@ function Login() {
             </button>
           </div>
         </form>
-        <Link to='/'>
+        <Link to='/profile'>
           <button className='spaced-button button large-button large-shadow'>
             BACK TO MENU
           </button>

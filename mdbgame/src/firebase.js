@@ -11,9 +11,7 @@ import {
 } from 'firebase/auth';
 import {
   getFirestore,
-  collection,
   doc,
-  getDocs,
   getDoc,
   updateDoc,
   setDoc,
@@ -127,7 +125,6 @@ export const getUserDocument = async (userId) => {
 
 export const updateUserStats = async (userAuth, data) => {
   if (!userAuth) return;
-
   const userRef = doc(db, 'users', userAuth.uid);
   const snapShot = await getDoc(userRef);
 
@@ -149,56 +146,66 @@ export const updateUserStats = async (userAuth, data) => {
     console.log('Error updating user', error.message);
   }
 
-  return getUserDocument(userAuth.uid);
+  return await getUserDocument(userAuth.uid);
 };
 
-export const getBestClickPath = async (userId, data) => {
-  const { initActor, endActor, path } = data;
-
-  const initActorID = initActor.id;
-  const endActorID = endActor.id;
-  let bestPath = path;
+export const getBestClickPath = async (
+  userId,
+  initActorID,
+  endActorID,
+  outPath
+) => {
+  if (!userId) return;
+  console.log('BEST CLICK PATH', userId, initActorID, endActorID, outPath);
+  let bestPath = outPath;
+  console.log(userId);
   let uid = userId;
+  try {
+    const bestClickPathRef = doc(db, 'bestclickpath', `${initActorID}`);
+    const snapShot = await getDoc(bestClickPathRef);
 
-  const bestClickPathRef = doc(db, 'bestclickpath', [initActorID]);
-  const snapShot = await getDoc(bestClickPathRef);
-
-  if (snapShot.exists()) {
-    if (snapShot.data()[endActorID]) {
-      const { [endActorID]: endActorData } = snapShot.data();
-      const { storedPath, storedUid } = endActorData;
-      if (storedPath.length < path.length) {
-        bestPath = storedPath;
-        uid = storedUid;
+    if (snapShot.exists()) {
+      if (snapShot.data()[endActorID]) {
+        console.log('Im in the snapShot.data()', snapShot.data()[endActorID]);
+        const path = snapShot.data()[endActorID].path;
+        const storedUid = snapShot.data()[endActorID].uid;
+        if (path.length <= outPath.length) {
+          bestPath = path;
+          uid = storedUid;
+        }
+      } else {
+        console.log('Im in the else of the snapShot');
+        await setDoc(bestClickPathRef, {
+          [endActorID]: {
+            path: outPath,
+            uid,
+          },
+        });
       }
     } else {
+      console.log('Im not in the snapShot');
       await setDoc(bestClickPathRef, {
         [endActorID]: {
-          path,
+          path: outPath,
           uid,
         },
       });
     }
-  } else {
-    await setDoc(bestClickPathRef, {
-      [endActorID]: {
-        path,
-        uid,
-      },
-    });
+  } catch (error) {
+    console.log('Error getting best click path', error.message);
   }
 
   // get the info from the user and return the best path
-  let name = 'Anonimous';
   try {
+    console.log(uid);
     const userData = await getUserDocument(uid);
-    const { storedName } = userData.data();
-    name = storedName;
+    const name = userData.name;
+    return {
+      bestPath,
+      name,
+    };
   } catch (error) {
     console.log('Error getting user', error.message);
+    return 1;
   }
-  return {
-    bestPath,
-    name,
-  };
 };

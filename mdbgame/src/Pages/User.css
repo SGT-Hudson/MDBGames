@@ -1,0 +1,41 @@
+.profile-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.reverse-button {
+  background-color: var(--blue);
+  color: var(--background);
+}
+
+.reverse-button:hover {
+  background-color: var(--background);
+  color: var(--blue);
+}
+
+.stats-item {
+  display: flex;
+  column-gap: 10px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.stats-item svg {
+  height: 36px;
+  width: 36px;
+}
+
+.stats-bubble {
+  background-color: var(--foreground);
+  border-radius: 18px;
+  padding: 20px 61px 20px 61px;
+}
+
+.stats-bubble > h1 {
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 0.085em;
+}

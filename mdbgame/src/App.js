@@ -8,6 +8,7 @@ import PostGame from './Pages/PostGame';
 import Settings from './Pages/Settings';
 import HowTo from './Pages/HowTo';
 import Login from './Pages/Login';
+import User from './Pages/User';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route exact path='/' element={<Menu />} />
         <Route exact path='/login' element={<Login />} />
+        <Route exact path='/profile' element={<User />} />
         <Route exact path='/settings' element={<Settings />} />
         <Route exact path='/howto' element={<HowTo />} />
         <Route exact path='/newgame' element={<GameInit />} />

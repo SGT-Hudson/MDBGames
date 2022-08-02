@@ -7,11 +7,6 @@ function Game() {
   const location = useLocation();
   const actors = location.state;
 
-  // const [initActor, setInitActor] = useState(actors[0]);
-  // const [endActor, setEndActor] = useState(actors[1]);
-  // window.history.replaceState({}, document.title);
-
-  console.log('Actors from Location: ', actors);
   return (
     <div className='flex-row game-container'>
       <Sidebar actor={actors[1]} end={actors[0]} />
