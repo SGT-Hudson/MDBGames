@@ -36,16 +36,13 @@ export const provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
-  console.log(result.user);
   const userData = await createUserDocument(result.user);
-  console.log('firestore data', userData);
   return userData;
 };
 
 export const registerWithEmail = async (email, password) => {
   try {
     const user = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('User with email created', user);
     return user;
   } catch (error) {
     console.log(error.message);
@@ -56,7 +53,6 @@ export const registerWithEmail = async (email, password) => {
 export const logInWithEmail = async (email, password) => {
   try {
     const user = await signInWithEmailAndPassword(auth, email, password);
-    console.log('User signed in', user);
     return user;
   } catch (error) {
     console.log(error);
@@ -67,7 +63,6 @@ export const logInWithEmail = async (email, password) => {
 export const signOutUser = async () => {
   try {
     await signOut(auth);
-    console.log('User signed out');
   } catch (error) {
     console.log(error.message);
   }
@@ -156,9 +151,7 @@ export const getBestClickPath = async (
   outPath
 ) => {
   if (!userId) return;
-  console.log('BEST CLICK PATH', userId, initActorID, endActorID, outPath);
   let bestPath = outPath;
-  console.log(userId);
   let uid = userId;
   try {
     const bestClickPathRef = doc(db, 'bestclickpath', `${initActorID}`);
@@ -166,7 +159,6 @@ export const getBestClickPath = async (
 
     if (snapShot.exists()) {
       if (snapShot.data()[endActorID]) {
-        console.log('Im in the snapShot.data()', snapShot.data()[endActorID]);
         const path = snapShot.data()[endActorID].path;
         const storedUid = snapShot.data()[endActorID].uid;
         if (path.length <= outPath.length) {
@@ -174,7 +166,6 @@ export const getBestClickPath = async (
           uid = storedUid;
         }
       } else {
-        console.log('Im in the else of the snapShot');
         await setDoc(bestClickPathRef, {
           [endActorID]: {
             path: outPath,
@@ -183,7 +174,6 @@ export const getBestClickPath = async (
         });
       }
     } else {
-      console.log('Im not in the snapShot');
       await setDoc(bestClickPathRef, {
         [endActorID]: {
           path: outPath,
@@ -197,7 +187,6 @@ export const getBestClickPath = async (
 
   // get the info from the user and return the best path
   try {
-    console.log(uid);
     const userData = await getUserDocument(uid);
     const name = userData.name;
     return {

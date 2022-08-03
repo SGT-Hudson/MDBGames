@@ -43,12 +43,9 @@ function Playground({ value, end }) {
       await getNewData();
     };
 
-    console.log('newValue:', newValue);
     setPath([...path, name]);
-    console.log('Path: ', path);
 
     if (type === 'actor' && id === end.id) {
-      console.log('End screen!!!');
       const timeInSec = Math.round((Date.now() - time) / 1000);
 
       navigate('/endscreen', {

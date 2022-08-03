@@ -20,6 +20,11 @@
   display: flex;
   column-gap: 10px;
   align-items: center;
+  justify-content: center;
+
+  font-weight: bold;
+  letter-spacing: 0.085em;
+
   padding-bottom: 10px;
 }
 
@@ -30,12 +35,17 @@
 
 .stats-bubble {
   background-color: var(--foreground);
+  width: 320px;
   border-radius: 18px;
-  padding: 20px 61px 20px 61px;
+  padding: 15px 61px 20px 61px;
 }
 
 .stats-bubble > h1 {
   text-align: center;
   font-weight: bold;
   letter-spacing: 0.085em;
+}
+
+.long-line {
+  width: 320px;
 }

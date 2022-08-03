@@ -9,3 +9,26 @@
 .menu-logo {
   padding-top: 20vh;
 }
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 100px;
+  border: 5px solid var(--background);
+}
+
+.profile-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-right: 17px;
+  gap: 10px;
+  color: var(--blue);
+  font-weight: bold;
+  letter-spacing: 0.085em;
+}
+
+.profile-div:hover {
+  color: var(--background);
+}

@@ -7,8 +7,14 @@ import './Menu.css';
 
 function Menu() {
   const [user, setUser] = useState(null);
+  const [name, setName] = useState('');
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
+    if (currentUser) {
+      setName(
+        currentUser.displayName.slice(0, currentUser.displayName.indexOf(' '))
+      );
+    }
   });
 
   return (
@@ -24,7 +30,14 @@ function Menu() {
           {user?.uid ? (
             <Link to='/profile'>
               <button className='button large-button large-shadow'>
-                PROFILE
+                <div className='profile-div'>
+                  <img
+                    className='profile-pic'
+                    src={user?.photoURL}
+                    alt='user profile'
+                  />
+                  {name}
+                </div>
               </button>
             </Link>
           ) : (

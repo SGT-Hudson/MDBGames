@@ -41,8 +41,6 @@ function PostGame() {
           data[2]
         );
 
-        console.log('GetBestClick output:', bestPath, name);
-
         let dataForUpdate = {};
         if (data[2]) {
           dataForUpdate = {
@@ -59,12 +57,11 @@ function PostGame() {
             fails: 1,
           };
         }
-        console.log('DataForUpdate:', dataForUpdate);
+
         const user = await updateUserStats(currentUser, dataForUpdate);
         setUserName(user.name);
         setBestPath(bestPath);
         setBestPathName(name);
-        console.log('Update output', userName);
       };
       getInfo();
     }
@@ -97,12 +94,17 @@ function PostGame() {
                   best={false}
                   userName={userName}
                 />
-                <Path
-                  path={bestPath}
-                  time={null}
-                  best={true}
-                  userName={bestPathName}
-                />
+                {path ? (
+                  <Path
+                    path={bestPath}
+                    time={null}
+                    best={true}
+                    userName={bestPathName}
+                    logedin={currentUser}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
               <ImageContainer item={endingActor} size={'large'} />
             </div>

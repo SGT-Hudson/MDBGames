@@ -12,7 +12,9 @@ import { ReactComponent as Logo } from '../images/logo.svg';
 import { Link } from 'react-router-dom';
 
 function User() {
+  const [user, setUser] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const [name, setName] = useState('');
 
   const navigate = useNavigate();
   const handleSignOut = async () => {
@@ -20,13 +22,24 @@ function User() {
     navigate('/');
   };
 
+  onAuthStateChanged(auth, (currentUser) => {
+    setUser(currentUser);
+    if (currentUser) {
+      setName(
+        currentUser.displayName.slice(0, currentUser.displayName.indexOf(' '))
+      );
+    }
+  });
+
   useEffect(() => {
-    const getInfo = async () => {
-      const user = await getUserDocument(auth.currentUser.uid);
-      setUserInfo(user);
-    };
-    getInfo();
-  }, []);
+    if (user) {
+      const getInfo = async () => {
+        const getUserInfo = await getUserDocument(user.uid);
+        setUserInfo(getUserInfo);
+      };
+      getInfo();
+    }
+  }, [user]);
 
   const avgClicks = () => {
     const avgUserClicks =
@@ -47,13 +60,14 @@ function User() {
       <Logo className='large-logo padding-top-logo' />
       <section className='profile-section'>
         <div className='stats-bubble'>
-          <h1>STATS</h1>
+          <h1>{name ? name : ''}'s STATS</h1>
+          <div className='line long-line'></div>
           <div className='stats-item'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
               viewBox='0 0 24 24'
-              stroke='currentColor'
+              stroke='var(--blue)'
               strokeWidth={2}
             >
               <path
@@ -69,7 +83,7 @@ function User() {
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
               viewBox='0 0 24 24'
-              stroke='currentColor'
+              stroke='var(--yellow)'
               strokeWidth='2'
             >
               <path
@@ -85,7 +99,7 @@ function User() {
               xmlns='http://www.w3.org/2000/svg'
               fill='none'
               viewBox='0 0 24 24'
-              stroke='currentColor'
+              stroke='var(--green)'
               strokeWidth={2}
             >
               <path
@@ -102,7 +116,7 @@ function User() {
               className='h-6 w-6'
               fill='none'
               viewBox='0 0 24 24'
-              stroke='currentColor'
+              stroke='var(--red)'
               strokeWidth={2}
             >
               <path

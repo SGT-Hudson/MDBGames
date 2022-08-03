@@ -84,7 +84,7 @@ function Login() {
             </button>
           </div>
         </form>
-        <Link to='/profile'>
+        <Link to='/'>
           <button className='spaced-button button large-button large-shadow'>
             BACK TO MENU
           </button>

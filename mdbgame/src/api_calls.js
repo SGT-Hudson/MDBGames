@@ -40,14 +40,14 @@ export const newGame = async () => {
 
   // Ensure that the two actors don't have the adult flag set to true
   do {
-    actorPair[0] = actorList[9];
-    // randActorPicker(actorList);
+    // actorPair[0] = actorList[9];
+    actorPair[0] = randActorPicker(actorList);
     actorPair[0].adultContent = checkAdultContent(actorPair[0]);
   } while (actorPair[0].adultContent === true);
 
   do {
-    actorPair[1] = actorList[2];
-    // randActorPicker(actorList);
+    // actorPair[1] = actorList[2];
+    actorPair[1] = randActorPicker(actorList);
     actorPair[1].adultContent = checkAdultContent(actorPair[1]);
   } while (
     actorPair[1].adultContent === true ||

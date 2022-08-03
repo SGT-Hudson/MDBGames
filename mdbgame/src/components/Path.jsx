@@ -7,7 +7,7 @@ function Path({ path, time, best, userName }) {
     pathString = path.join(' > ');
   }
 
-  if (path === null && time) {
+  if (path === null) {
     return (
       <div className='end-middle-section-text large-shadow'>
         <div className='flex-column top-text'>
@@ -20,7 +20,7 @@ function Path({ path, time, best, userName }) {
   return (
     <div className='end-middle-section-text large-shadow'>
       <div className='flex-row top-text'>
-        {best ? <h2>{userName}</h2> : <h2>Your path</h2>}
+        {best ? <h2>Best path: {userName}</h2> : <h2>Your path</h2>}
         {time ? <h2>Time: {time}</h2> : <></>}
       </div>
       {path ? <p className='path'>{pathString}</p> : <></>}
