@@ -1,21 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
+import { auth, getUserDocument } from '../firebase';
+import { ReactComponent as Empty } from '../images/empty_profile_photo.svg';
 import './Menu.css';
 
 function Menu() {
   const [user, setUser] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [name, setName] = useState('');
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
-    if (currentUser) {
-      setName(
-        currentUser.displayName.slice(0, currentUser.displayName.indexOf(' '))
-      );
+    if (userInfo) {
+      if (user.displayName) {
+        setName(user.displayName.slice(0, user.displayName.indexOf(' ')));
+      } else setName(userInfo.name);
     }
   });
+  useEffect(() => {
+    if (user) {
+      const getInfo = async () => {
+        const getUserInfo = await getUserDocument(user.uid);
+        setUserInfo(getUserInfo);
+        console.log(getUserInfo);
+      };
+      getInfo();
+    }
+  }, [user]);
 
   return (
     <>
@@ -29,15 +41,21 @@ function Menu() {
           </Link>
           {user?.uid ? (
             <Link to='/profile'>
-              <button className='button large-button large-shadow'>
-                <div className='profile-div'>
-                  <img
-                    className='profile-pic'
-                    src={user?.photoURL}
-                    alt='user profile'
-                  />
-                  {name}
-                </div>
+              <button className='large-button large-shadow profile-button'>
+                {user ? (
+                  <div className='profile-div'>
+                    {user.photoURL === null ? (
+                      <Empty className='profile-pic' />
+                    ) : (
+                      <img
+                        className='profile-pic'
+                        src={user.photoURL}
+                        alt='user profile'
+                      />
+                    )}
+                    {name}
+                  </div>
+                ) : null}
               </button>
             </Link>
           ) : (

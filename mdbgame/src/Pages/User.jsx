@@ -24,10 +24,10 @@ function User() {
 
   onAuthStateChanged(auth, (currentUser) => {
     setUser(currentUser);
-    if (currentUser) {
-      setName(
-        currentUser.displayName.slice(0, currentUser.displayName.indexOf(' '))
-      );
+    if (userInfo) {
+      if (user.displayName) {
+        setName(user.displayName.slice(0, user.displayName.indexOf(' ')));
+      } else setName(userInfo.name);
     }
   });
 
@@ -42,16 +42,18 @@ function User() {
   }, [user]);
 
   const avgClicks = () => {
-    const avgUserClicks =
+    const avgUserClicks = Math.round(
       userInfo.clicks.reduce((item, acc) => acc + item, 0) /
-      userInfo.clicks.length;
+        userInfo.clicks.length
+    );
     return avgUserClicks;
   };
 
   const avgTime = () => {
-    const avgUserTime =
+    const avgUserTime = Math.round(
       userInfo.timePlayed.reduce((item, acc) => acc + item, 0) /
-      userInfo.timePlayed.length;
+        userInfo.timePlayed.length
+    );
     return avgUserTime;
   };
 

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import './Path.css';
 
 function Path({ path, time, best, userName }) {

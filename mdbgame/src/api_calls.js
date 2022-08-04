@@ -1,5 +1,5 @@
 const image500 = process.env.REACT_APP_API_IMAGE;
-const maxPage = 1;
+const maxPage = 50;
 
 const randActorPicker = (data) => {
   const randomActor = Math.floor(Math.random() * 20);
@@ -11,7 +11,7 @@ const checkAdultContent = (actor) => {
     for (let i = 0; i < actor.known_for.length; i++) {
       //there is a lot of adult content not tagged as adult from this coutries
       if (
-        ['ko', 'ja', 'th', 'zh'].includes(
+        ['ko', 'ja', 'th', 'zh', 'in'].includes(
           actor.known_for[i].original_language
         ) ||
         actor.known_for[i].adult === true
@@ -25,6 +25,7 @@ const checkAdultContent = (actor) => {
 
 export const newGame = async () => {
   const randomPage = Math.floor(Math.random() * maxPage + 1);
+  // const randomPage = 5;
 
   let data;
   try {
@@ -40,13 +41,13 @@ export const newGame = async () => {
 
   // Ensure that the two actors don't have the adult flag set to true
   do {
-    // actorPair[0] = actorList[9];
+    // actorPair[0] = actorList[5];
     actorPair[0] = randActorPicker(actorList);
     actorPair[0].adultContent = checkAdultContent(actorPair[0]);
   } while (actorPair[0].adultContent === true);
 
   do {
-    // actorPair[1] = actorList[2];
+    // actorPair[1] = actorList[6];
     actorPair[1] = randActorPicker(actorList);
     actorPair[1].adultContent = checkAdultContent(actorPair[1]);
   } while (
@@ -62,7 +63,7 @@ export const newGame = async () => {
   actorPair[1].image = actorPair[1].profile_path
     ? image500 + actorPair[1].profile_path
     : null;
-
+  console.log(actorPair);
   return actorPair;
 };
 

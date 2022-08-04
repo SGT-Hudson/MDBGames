@@ -42,8 +42,10 @@ export const signInWithGoogle = async () => {
 
 export const registerWithEmail = async (email, password) => {
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    return user;
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+
+    const userData = await createUserDocument(result.user);
+    return userData;
   } catch (error) {
     console.log(error.message);
     return error;
@@ -52,8 +54,9 @@ export const registerWithEmail = async (email, password) => {
 
 export const logInWithEmail = async (email, password) => {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    return user;
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const userData = await createUserDocument(result.user);
+    return userData;
   } catch (error) {
     console.log(error);
     return error;

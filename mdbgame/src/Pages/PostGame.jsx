@@ -94,7 +94,7 @@ function PostGame() {
                   best={false}
                   userName={userName}
                 />
-                {path ? (
+                {currentUser ? (
                   <Path
                     path={bestPath}
                     time={null}
