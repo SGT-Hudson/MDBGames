@@ -11,11 +11,13 @@ function Menu() {
   const [userInfo, setUserInfo] = useState(null);
   const [name, setName] = useState('');
   onAuthStateChanged(auth, (currentUser) => {
-    setUser(currentUser);
-    if (userInfo) {
-      if (user.displayName) {
-        setName(user.displayName.slice(0, user.displayName.indexOf(' ')));
-      } else setName(userInfo.name);
+    if (currentUser) {
+      setUser(currentUser);
+      if (userInfo) {
+        if (user.displayName) {
+          setName(user.displayName.slice(0, user.displayName.indexOf(' ')));
+        } else setName(userInfo.name);
+      }
     }
   });
   useEffect(() => {
@@ -23,7 +25,6 @@ function Menu() {
       const getInfo = async () => {
         const getUserInfo = await getUserDocument(user.uid);
         setUserInfo(getUserInfo);
-        console.log(getUserInfo);
       };
       getInfo();
     }

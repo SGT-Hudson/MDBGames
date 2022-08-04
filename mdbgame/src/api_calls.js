@@ -63,7 +63,6 @@ export const newGame = async () => {
   actorPair[1].image = actorPair[1].profile_path
     ? image500 + actorPair[1].profile_path
     : null;
-  console.log(actorPair);
   return actorPair;
 };
 
