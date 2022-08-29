@@ -18,7 +18,7 @@ DESCRIPTION
 
 ```
 git clone https://github.com/YourUsername/MDBGames
-cd MDBGames/mdbgame
+cd MDBGames
 ```
 
 2. Install dependencies
@@ -51,9 +51,11 @@ npm start
 ## What makes MDBGames different
 
 - ### One of a kind app
+
   - First web to let users play through a movie database to their skills.
 
 - ### Fully Developed in React
+
   - Able to work on web for desktop and mobile.
   - Create an account to get the full experience.
 

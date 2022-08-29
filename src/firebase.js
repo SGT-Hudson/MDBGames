@@ -36,6 +36,7 @@ export const provider = new GoogleAuthProvider();
 
 export const signInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
+  console.log(result);
   const userData = await createUserDocument(result.user);
   return userData;
 };
@@ -44,6 +45,7 @@ export const registerWithEmail = async (email, password) => {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
 
+    console.log(result);
     const userData = await createUserDocument(result.user);
     return userData;
   } catch (error) {
