@@ -1,6 +1,6 @@
 # MDBGames
 
-DESCRIPTION
+MDG Games is a web app where you can test your knowledge about movies, series and actors by navigating from a starting point to an end point moving through a movie database.
 
 <p align="center">
   <img src="./MDBGames.png" />
