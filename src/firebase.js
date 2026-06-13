@@ -155,51 +155,53 @@ export const getBestClickPath = async (
   endActorID,
   outPath
 ) => {
-  if (!userId) return;
+  // Always return a consistent shape so the UI can destructure safely.
+  if (!userId) return { bestPath: outPath, name: null };
+
   let bestPath = outPath;
-  let uid = userId;
+  // The current player's own name (reading our own user doc is always allowed
+  // by the security rules — we never read other users' documents here).
+  let bestName = null;
+  try {
+    const me = await getUserDocument(userId);
+    bestName = me ? me.name : null;
+  } catch (error) {
+    console.log('Error getting current user', error.message);
+  }
+
+  // A "give up" run has no path to compare against or store.
+  if (!outPath) {
+    return { bestPath: null, name: bestName };
+  }
+
   try {
     const bestClickPathRef = doc(db, 'bestclickpath', `${initActorID}`);
     const snapShot = await getDoc(bestClickPathRef);
+    const stored = snapShot.exists() ? snapShot.data()[endActorID] : null;
 
-    if (snapShot.exists()) {
-      if (snapShot.data()[endActorID]) {
-        const path = snapShot.data()[endActorID].path;
-        const storedUid = snapShot.data()[endActorID].uid;
-        if (path.length <= outPath.length) {
-          bestPath = path;
-          uid = storedUid;
-        }
-      } else {
-        await setDoc(bestClickPathRef, {
+    if (stored && stored.path && stored.path.length <= outPath.length) {
+      // An existing record is as good or better — show it. The owner's name is
+      // stored alongside the path, so we don't need to read their profile.
+      bestPath = stored.path;
+      bestName = stored.name || bestName;
+    } else {
+      // Our run is the new best — save it. `merge` preserves the records for
+      // other destination actors stored in the same document.
+      await setDoc(
+        bestClickPathRef,
+        {
           [endActorID]: {
             path: outPath,
-            uid,
+            uid: userId,
+            name: bestName,
           },
-        });
-      }
-    } else {
-      await setDoc(bestClickPathRef, {
-        [endActorID]: {
-          path: outPath,
-          uid,
         },
-      });
+        { merge: true }
+      );
     }
   } catch (error) {
     console.log('Error getting best click path', error.message);
   }
 
-  // get the info from the user and return the best path
-  try {
-    const userData = await getUserDocument(uid);
-    const name = userData.name;
-    return {
-      bestPath,
-      name,
-    };
-  } catch (error) {
-    console.log('Error getting user', error.message);
-    return 1;
-  }
+  return { bestPath, name: bestName };
 };
