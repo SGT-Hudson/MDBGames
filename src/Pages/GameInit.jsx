@@ -14,14 +14,21 @@ import './GameInit.css';
 function GameInit() {
   const [actors, setActors] = useState([null, null]);
 
-  useEffect(() => {
-    const createNewGame = async () => {
-      const newGameResponse = await newGame();
-      setActors(newGameResponse);
-    };
+  const createNewGame = async () => {
+    const newGameResponse = await newGame();
+    setActors(newGameResponse);
+  };
 
+  useEffect(() => {
     createNewGame();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Re-roll the pair of actors without leaving the screen.
+  const handleRandomize = () => {
+    setActors([null, null]);
+    createNewGame();
+  };
 
   return (
     <>
@@ -29,6 +36,11 @@ function GameInit() {
         <div className='start-container'>
           {/* -------------------Top logo---------------------------- */}
           <Logo className='large-logo' />
+          {/* -------------------Explanation------------------------- */}
+          <p className='game-intro'>
+            Get from the first actor to the second by hopping through the movies
+            they starred in and the actors that appear in them.
+          </p>
           {/* -------------------Middle section---------------------- */}
           <div className='flex-row start-middle-section'>
             <ImageContainer item={actors[0]} size={'large'} position={'left'} />
@@ -45,16 +57,37 @@ function GameInit() {
             />
           </div>
           {/* -------------------Bottom buttons---------------------- */}
-          <div className='flex-row'>
+          <div className='flex-row start-buttons'>
+            <Link to='/'>
+              <button className='button small-button large-text svg-color large-shadow'>
+                <ArrowBack className='arrow-back' />
+              </button>
+            </Link>
+
+            <button
+              className='button small-button large-shadow'
+              onClick={handleRandomize}
+              aria-label='Randomize actors'
+            >
+              <svg
+                className='randomize-icon'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                  d='M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99'
+                />
+              </svg>
+            </button>
+
             <Link to='/game' state={actors}>
               <button className='button large-button large-shadow'>
                 START GAME
-              </button>
-            </Link>
-            <Link to='/'>
-              <button className='button small-button large-text svg-color large-shadow'>
-                {/* &lt; */}
-                <ArrowBack className='arrow-back' />
               </button>
             </Link>
           </div>
