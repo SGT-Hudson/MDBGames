@@ -13,10 +13,20 @@ import './GameInit.css';
 
 function GameInit() {
   const [actors, setActors] = useState([null, null]);
+  const [error, setError] = useState(false);
 
+  // Re-roll the pair of actors. Guards against a failed/hung request so the
+  // screen never gets stuck blank.
   const createNewGame = async () => {
-    const newGameResponse = await newGame();
-    setActors(newGameResponse);
+    setError(false);
+    setActors([null, null]);
+    try {
+      const newGameResponse = await newGame();
+      setActors(newGameResponse);
+    } catch (e) {
+      console.log(e);
+      setError(true);
+    }
   };
 
   useEffect(() => {
@@ -24,11 +34,42 @@ function GameInit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Re-roll the pair of actors without leaving the screen.
   const handleRandomize = () => {
-    setActors([null, null]);
     createNewGame();
   };
+
+  if (error) {
+    return (
+      <div className='start-container'>
+        <Logo className='large-logo' />
+        <p className='game-intro'>
+          Couldn&apos;t load the actors. Please try again.
+        </p>
+        <div className='flex-row start-buttons'>
+          <Link to='/'>
+            <button className='button small-button large-text svg-color large-shadow'>
+              <ArrowBack className='arrow-back' />
+            </button>
+          </Link>
+          <button
+            className='button large-button large-shadow'
+            onClick={handleRandomize}
+          >
+            RETRY
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!actors[0]) {
+    return (
+      <div className='start-container'>
+        <Logo className='large-logo' />
+        <p className='game-intro'>Loading…</p>
+      </div>
+    );
+  }
 
   return (
     <>

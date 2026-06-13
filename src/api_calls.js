@@ -1,11 +1,6 @@
 const image500 = process.env.REACT_APP_API_IMAGE;
 const maxPage = 50;
 
-const randActorPicker = (data) => {
-  const randomActor = Math.floor(Math.random() * 20);
-  return data[randomActor];
-};
-
 const checkAdultContent = (actor) => {
   if (actor.known_for) {
     for (let i = 0; i < actor.known_for.length; i++) {
@@ -24,45 +19,48 @@ const checkAdultContent = (actor) => {
 };
 
 export const newGame = async () => {
-  const randomPage = Math.floor(Math.random() * maxPage + 1);
-  // const randomPage = 5;
+  // Pick two distinct, non-adult actors from a page of results.
+  const pickPair = (actorList) => {
+    const valid = actorList.filter((actor) => actor && !checkAdultContent(actor));
+    if (valid.length < 2) return null;
 
-  let data;
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
-    );
-    data = await response.json();
-  } catch (error) {}
+    const first = valid[Math.floor(Math.random() * valid.length)];
+    let second = first;
+    // valid.length >= 2 guarantees this terminates.
+    while (second.id === first.id) {
+      second = valid[Math.floor(Math.random() * valid.length)];
+    }
+    return [first, second];
+  };
 
-  const actorList = data.results;
-  // Randomly select two actors from the API response
-  const actorPair = [{}, {}];
+  // Try a few random pages until we get a usable pair, so a flaky request or
+  // an unlucky page can't leave the game stuck.
+  let actorPair = null;
+  for (let attempt = 0; attempt < 5 && !actorPair; attempt++) {
+    const randomPage = Math.floor(Math.random() * maxPage + 1);
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
+      );
+      const data = await response.json();
+      if (data && Array.isArray(data.results)) {
+        actorPair = pickPair(data.results);
+      }
+    } catch (error) {
+      console.log('newGame fetch error', error);
+    }
+  }
 
-  // Ensure that the two actors don't have the adult flag set to true
-  do {
-    // actorPair[0] = actorList[5];
-    actorPair[0] = randActorPicker(actorList);
-    actorPair[0].adultContent = checkAdultContent(actorPair[0]);
-  } while (actorPair[0].adultContent === true);
+  if (!actorPair) {
+    throw new Error('Could not load actors for a new game');
+  }
 
-  do {
-    // actorPair[1] = actorList[6];
-    actorPair[1] = randActorPicker(actorList);
-    actorPair[1].adultContent = checkAdultContent(actorPair[1]);
-  } while (
-    actorPair[1].adultContent === true ||
-    actorPair[0].id === actorPair[1].id
-  );
+  // Add the adult flag and the full image path each actor needs downstream.
+  actorPair.forEach((actor) => {
+    actor.adultContent = checkAdultContent(actor);
+    actor.image = actor.profile_path ? image500 + actor.profile_path : null;
+  });
 
-  //providing the actual image path
-  actorPair[0].image = actorPair[0].profile_path
-    ? image500 + actorPair[0].profile_path
-    : null;
-
-  actorPair[1].image = actorPair[1].profile_path
-    ? image500 + actorPair[1].profile_path
-    : null;
   return actorPair;
 };
 
