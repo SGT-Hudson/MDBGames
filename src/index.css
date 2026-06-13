@@ -85,6 +85,16 @@ code {
   transition: color 0.1s ease-in-out;
 }
 
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  background-color: var(--background);
+  color: var(--blue);
+}
+
 .large-button {
   width: 376px;
   height: 72px;

@@ -31,6 +31,39 @@
   stroke: var(--background);
 }
 
+/* Loading skeleton shown in place of an actor card until its photo loads. */
+.skeleton-card {
+  justify-content: flex-start;
+}
+
+.skeleton-block,
+.skeleton-line {
+  background: linear-gradient(90deg, #444 25%, #5a5a5a 37%, #444 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+.skeleton-block {
+  aspect-ratio: 280 / 405;
+  border-radius: 12px;
+}
+
+.skeleton-line {
+  height: 20px;
+  width: 70%;
+  margin: 10px auto 4px auto;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 img {
   width: 250px;
 }
@@ -78,14 +111,15 @@ img {
 }
 
 @media (max-width: 600px) {
-  /* Fill the screen and spread logo / actors / buttons so it all fits with
-     no scrolling. */
+  /* Group logo / intro / cards near the top and pin the buttons to the
+     bottom, so there's no large empty gap in the middle. */
   .start-container {
     height: auto;
     min-height: 100vh;
     min-height: 100svh;
-    justify-content: space-between;
-    padding: 12px 8px;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 14px 8px;
     box-sizing: border-box;
   }
 
@@ -159,11 +193,12 @@ img {
     fill: var(--blue);
   }
 
-  /* Back · randomize · play, all on one row at the bottom. */
+  /* Back · randomize · play, all on one row pinned to the bottom. */
   .start-buttons {
     flex-wrap: nowrap;
     gap: 10px;
     width: 100%;
+    margin-top: auto;
   }
 
   /* The play button is wrapped in a <Link>, so the link is the flex item
