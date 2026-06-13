@@ -46,3 +46,22 @@ img {
     background-position: 0% 50%;
   }
 }
+
+@media (max-width: 768px) {
+  .start-container {
+    height: auto;
+    min-height: 90vh;
+    padding: 24px 0;
+    box-sizing: border-box;
+  }
+
+  .start-middle-section {
+    gap: 2em;
+    margin-bottom: 2em;
+  }
+
+  /* Rotate the arrows to point downward between the stacked portraits. */
+  .arrows {
+    transform: rotate(90deg) scale(0.85);
+  }
+}

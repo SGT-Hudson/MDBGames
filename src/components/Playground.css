@@ -18,3 +18,24 @@
 .playground-image {
   box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);
 }
+
+@media (max-width: 768px) {
+  /* Stack the sidebar above the playground instead of side-by-side. */
+  .game-container {
+    flex-direction: column;
+  }
+
+  .playground-container {
+    margin: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+    width: auto;
+  }
+
+  /* Let the long lists of cast/top items wrap and scroll within the page. */
+  .top-info-movies,
+  .actor-list {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

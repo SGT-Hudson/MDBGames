@@ -20,3 +20,10 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 600px) {
+  .how-to-bubble {
+    padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+    margin: 0 4vw 15px 4vw;
+  }
+}

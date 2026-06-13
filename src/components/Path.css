@@ -19,3 +19,11 @@
   background-color: var(--foreground);
   border-radius: 18px;
 }
+
+@media (max-width: 768px) {
+  .end-middle-section-text {
+    width: min(420px, 86vw);
+    height: auto;
+    padding-bottom: 1em;
+  }
+}

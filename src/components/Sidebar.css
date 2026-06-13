@@ -40,3 +40,22 @@
   font-weight: bold;
   color: var(--background);
 }
+
+@media (max-width: 768px) {
+  /* Drop out of the fixed layout and sit at the top of the stacked page. */
+  .sidebar {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 1.5em;
+    padding: 16px 16px 0 16px;
+    box-sizing: border-box;
+  }
+
+  .sidebar-text {
+    font-size: 1.5em;
+    text-align: center;
+  }
+}

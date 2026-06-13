@@ -113,3 +113,48 @@ code {
 .no-gap {
   gap: 0;
 }
+
+/* RESPONSIVE ---------------------------------------- */
+@media (max-width: 768px) {
+  /* Keep wide content rows from overflowing on small screens. */
+  .flex-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    /* decorative, fixed-size elements can slightly exceed the viewport */
+    overflow-x: hidden;
+  }
+
+  .large-logo {
+    width: 88vw;
+    max-width: 360px;
+    height: auto;
+  }
+
+  .small-logo {
+    width: 55vw;
+    max-width: 220px;
+    height: auto;
+  }
+
+  .button {
+    font-size: 1.5em;
+    border-width: 6px;
+  }
+
+  .large-button {
+    width: min(376px, 88vw);
+  }
+
+  .medium-button {
+    width: min(288px, 80vw);
+  }
+
+  .large-text {
+    font-size: 1.9em;
+  }
+}
