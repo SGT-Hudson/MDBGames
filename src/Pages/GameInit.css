@@ -47,21 +47,103 @@ img {
   }
 }
 
-@media (max-width: 768px) {
+/* The small chevron is only used on phones; the animated bar is desktop. */
+.mobile-arrow {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  /* Fill the screen and spread logo / actors / buttons so it all fits with
+     no scrolling. */
   .start-container {
     height: auto;
-    min-height: 90vh;
-    padding: 24px 0;
+    min-height: 100vh;
+    min-height: 100svh;
+    justify-content: space-between;
+    padding: 12px 8px;
     box-sizing: border-box;
   }
 
-  .start-middle-section {
-    gap: 2em;
-    margin-bottom: 2em;
+  .start-container .large-logo {
+    width: 64vw;
+    max-width: 280px;
+    margin: 0 auto;
   }
 
-  /* Rotate the arrows to point downward between the stacked portraits. */
-  .arrows {
-    transform: rotate(90deg) scale(0.85);
+  /* Keep the two portraits side by side instead of wrapping. */
+  .start-middle-section {
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .start-middle-section .large-portrait {
+    width: 40vw;
+    height: auto;
+    padding: 5px 5px 0 5px;
+    box-sizing: border-box;
+  }
+
+  .start-middle-section .large-portrait-image {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Drop the playful tilt on small screens to save space and avoid overlap. */
+  .start-middle-section .left,
+  .start-middle-section .right {
+    transform: none;
+  }
+
+  /* Shrink the actor names so they don't overflow the narrower cards. */
+  .start-middle-section .large-text-name {
+    height: auto;
+  }
+
+  .start-middle-section .large-text-image,
+  .start-middle-section .medium-text-image {
+    font-size: 13px;
+  }
+
+  .start-middle-section .small-text-image,
+  .start-middle-section .super-small-text-image {
+    font-size: 11px;
+  }
+
+  /* Swap the big animated arrow for a small chevron between the portraits. */
+  .desktop-arrows {
+    display: none;
+  }
+
+  .mobile-arrow {
+    display: block;
+    flex-shrink: 0;
+    width: 22px;
+    height: auto;
+  }
+
+  .mobile-arrow path {
+    fill: var(--blue);
+  }
+
+  /* Buttons sit together at the bottom and fit on one row. */
+  .start-container .flex-row:last-child {
+    gap: 12px;
+  }
+
+  .start-container .large-button {
+    width: auto;
+    min-width: 0;
+    flex: 1;
+    padding: 0 12px;
+    height: 64px;
+    font-size: 1.3em;
+  }
+
+  .start-container .small-button {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
   }
 }

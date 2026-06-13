@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { ReactComponent as Arrows } from '../images/arrows.svg';
+import { ReactComponent as Arrow } from '../images/arrow.svg';
 import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 
 import ImageContainer from '../components/ImageContainer';
@@ -32,9 +33,10 @@ function GameInit() {
           <div className='flex-row start-middle-section'>
             <ImageContainer item={actors[0]} size={'large'} position={'left'} />
 
-            <div className='arrows'>
+            <div className='arrows desktop-arrows'>
               <Arrows />
             </div>
+            <Arrow className='mobile-arrow' />
 
             <ImageContainer
               item={actors[1]}
