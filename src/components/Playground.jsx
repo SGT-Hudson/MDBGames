@@ -77,7 +77,7 @@ function Playground({ value, end }) {
           ) : (
             <div>
               <h1 className='movie-list-title'>Cast:</h1>
-              <div className='flex-row actor-list'>
+              <div className='card-grid'>
                 {currentItem.cast.map((actor) => {
                   return (
                     <Top5Item

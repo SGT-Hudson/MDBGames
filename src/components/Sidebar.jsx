@@ -10,18 +10,19 @@ function Sidebar({ actor, end }) {
 
   return (
     <div className='flex-column sidebar'>
-      <div className='flex-column'>
-        <Logo className='small-logo' />
+      <div className='flex-column sidebar-target'>
+        <Logo className='small-logo sidebar-logo' />
         <h1 className='bold sidebar-text'>Find this actor</h1>
         <ImageContainer item={actor} size={'small'} />
       </div>
-      <div className='flex-column'>
+      <div className='flex-column sidebar-controls'>
         <Timer timer={timer} setTimer={setTimer} />
 
         <Link
           to='/endscreen'
           state={[actor, end, null, timer]}
           style={{ textDecoration: 'none' }}
+          className='give-up-link'
         >
           <div className='give-up'>
             <p>Give Up</p>

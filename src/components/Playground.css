@@ -31,11 +31,31 @@
     box-sizing: border-box;
     width: auto;
   }
+}
 
-  /* Let the long lists of cast/top items wrap and scroll within the page. */
-  .top-info-movies,
-  .actor-list {
-    flex-wrap: wrap;
-    justify-content: center;
+@media (max-width: 600px) {
+  .playground-container {
+    margin: 0;
+    /* Bottom space so content isn't hidden behind the fixed Give Up bar. */
+    padding: 14px 12px 84px 12px;
+    border-radius: 0;
+  }
+
+  /* Smaller current actor/movie card so it doesn't fill the screen. */
+  .playground-container .large-portrait {
+    width: 50vw;
+    max-width: 200px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .playground-container .large-portrait-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .movie-list-title,
+  .top-info-text {
+    font-size: 1.4em;
   }
 }
