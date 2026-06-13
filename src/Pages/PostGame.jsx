@@ -65,6 +65,7 @@ function PostGame() {
       };
       getInfo();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   if (time > 3599) {

@@ -4,13 +4,14 @@ import './Timer.css';
 function Timer({ timer, setTimer }) {
   const useTimer = () => {
     const timerDate = Date.now();
-    const [initTime, setInitTimer] = useState(timerDate);
+    const [initTime] = useState(timerDate);
 
     useEffect(() => {
       const interval = setInterval(() => {
         setTimer(Math.round((Date.now() - initTime) / 1000));
       }, 1000);
       return () => clearInterval(interval);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [timerDate]);
 
     if (timer > 3599) {

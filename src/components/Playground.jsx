@@ -12,7 +12,7 @@ function Playground({ value, end }) {
   const [currentItem, setCurrentItem] = useState({});
   const [newValue, setNewValue] = useState(['actor', value.id, value.name]);
   const [path, setPath] = useState([]);
-  const [time, setTime] = useState(new Date().getTime());
+  const [time] = useState(new Date().getTime());
 
   const navigate = useNavigate();
 
@@ -53,6 +53,7 @@ function Playground({ value, end }) {
         state: [value, end, [...path, end.name], timeInSec],
       });
     } else getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newValue]);
 
   return (
