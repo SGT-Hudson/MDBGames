@@ -52,6 +52,13 @@
   display: none;
 }
 
+.sidebar-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .give-up {
   width: fit-content;
   background-color: var(--transparent-blue);
@@ -124,18 +131,21 @@
     min-width: 0;
   }
 
-  /* Shrink the target card into a small chip. */
+  /* Just the photo, no card around it. */
   .sidebar-target .small-portrait {
     width: 44px;
     height: auto;
-    padding: 3px 3px 0 3px;
-    border-radius: 8px;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
     flex-shrink: 0;
   }
 
   .sidebar-target .small-portrait-image {
-    width: 100%;
-    height: auto;
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
   }
 
   .target-info {
@@ -165,8 +175,9 @@
     text-overflow: ellipsis;
   }
 
-  /* Timer + Give Up grouped on the right. */
+  /* Timer + Give Up side by side on the right. */
   .sidebar-controls {
+    display: flex;
     flex-direction: row;
     align-items: center;
     gap: 8px;
