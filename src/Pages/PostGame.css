@@ -1,27 +1,92 @@
-.end-middle-section {
-  justify-content: center;
-  gap: 2em;
+.end-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 12px 32px 12px;
+  box-sizing: border-box;
 }
 
 .end-logo {
-  width: 100%;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+
+.end-result {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: 2.2em;
   text-align: center;
+}
+
+.end-result.won {
+  color: var(--green);
+}
+
+.end-result.lost {
+  color: var(--red);
+}
+
+/* Start -> end actors side by side with a small arrow. */
+.end-actors {
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.end-actors .large-portrait {
+  width: 170px;
+  height: auto;
+}
+
+.end-actors .large-portrait-image {
+  width: 100%;
+  height: auto;
+}
+
+.end-arrow {
+  flex-shrink: 0;
+  width: 28px;
+  height: auto;
+}
+
+.end-arrow path {
+  fill: var(--blue);
+}
+
+.end-paths {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-wasted {
+  margin: 0;
+  color: var(--grey-text);
+  font-weight: 700;
+  font-size: 1.2em;
 }
 
 .end-buttons {
   justify-content: center;
-  margin-top: 7vh;
+  gap: 14px;
+  margin-top: 8px;
 }
 
-@media (max-width: 768px) {
-  .end-middle-section {
-    gap: 1.5em;
-    padding: 0 12px;
+@media (max-width: 600px) {
+  .end-result {
+    font-size: 1.7em;
   }
 
-  .end-buttons {
-    margin-top: 4vh;
-    padding-bottom: 24px;
+  .end-actors .large-portrait {
+    width: 36vw;
+    max-width: 150px;
+  }
+
+  .end-arrow {
+    width: 20px;
   }
 }

@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import ImageContainer from '../components/ImageContainer';
 import Path from '../components/Path';
 import { ReactComponent as Logo } from '../images/logo.svg';
+import { ReactComponent as Arrow } from '../images/arrow.svg';
 import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getBestClickPath, updateUserStats, auth } from '../firebase';
 import './PostGame.css';
 
 function PostGame() {
-  const [userName, setUserName] = useState(null);
   const [bestPath, setBestPath] = useState([]);
   const [bestPathName, setBestPathName] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
@@ -58,8 +58,7 @@ function PostGame() {
           };
         }
 
-        const user = await updateUserStats(currentUser, dataForUpdate);
-        setUserName(user.name);
+        await updateUserStats(currentUser, dataForUpdate);
         setBestPath(bestPath);
         setBestPathName(name);
       };
@@ -78,54 +77,60 @@ function PostGame() {
     timeString = time + ' seconds';
   }
 
+  const won = Boolean(data[2]);
+  const clicks = data[2] ? data[2].length - 1 : null;
+
   return (
     <>
-      {
-        startingActor ? (
-          <div>
-            {/* -------------------Top logo---------------------------- */}
-            <Logo className='large-logo end-logo' />
-            {/* -------------------Middle section---------------------- */}
-            <div className='flex-row end-middle-section'>
-              <ImageContainer item={startingActor} size={'large'} />
-              <div>
-                <Path
-                  path={path}
-                  time={timeString}
-                  best={false}
-                  userName={userName}
-                />
-                {currentUser ? (
-                  <Path
-                    path={bestPath}
-                    time={null}
-                    best={true}
-                    userName={bestPathName}
-                    logedin={currentUser}
-                  />
-                ) : (
-                  <></>
-                )}
-              </div>
-              <ImageContainer item={endingActor} size={'large'} />
-            </div>
-            {/* -------------------Buttons---------------------- */}
-            <div className='flex-row end-buttons'>
-              <Link to='/newgame'>
-                <button className='button large-button'>NEW GAME</button>
-              </Link>
-              <Link to='/'>
-                <button className='button small-button large-text svg-color'>
-                  <ArrowBack className='arrow-back' />
-                </button>
-              </Link>
-            </div>
-            {/* ------------------------------------------------------- */}
+      {startingActor ? (
+        <div className='end-container'>
+          {/* -------------------Top logo---------------------------- */}
+          <Logo className='large-logo end-logo' />
+
+          {/* -------------------Result------------------------------ */}
+          <h1 className={`end-result ${won ? 'won' : 'lost'}`}>
+            {won ? 'YOU WON!' : 'YOU GAVE UP'}
+          </h1>
+
+          {/* -------------------Start -> End------------------------ */}
+          <div className='flex-row end-actors'>
+            <ImageContainer item={startingActor} size={'large'} />
+            <Arrow className='end-arrow' />
+            <ImageContainer item={endingActor} size={'large'} />
           </div>
-        ) : (
-          <></>
-        ) /* if we have no actors, load this  */
-      }
+
+          {/* -------------------Paths------------------------------- */}
+          <div className='end-paths'>
+            {won ? (
+              <Path
+                path={path}
+                time={timeString}
+                clicks={clicks}
+                best={false}
+              />
+            ) : (
+              <p className='time-wasted'>Time wasted: {timeString}</p>
+            )}
+            {currentUser ? (
+              <Path path={bestPath} best={true} userName={bestPathName} />
+            ) : null}
+          </div>
+
+          {/* -------------------Buttons----------------------------- */}
+          <div className='flex-row end-buttons'>
+            <Link to='/newgame'>
+              <button className='button large-button'>NEW GAME</button>
+            </Link>
+            <Link to='/'>
+              <button className='button small-button large-text svg-color'>
+                <ArrowBack className='arrow-back' />
+              </button>
+            </Link>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

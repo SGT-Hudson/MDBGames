@@ -1,29 +1,50 @@
-.path {
-  margin: auto;
-  text-align: center;
-  width: 90%;
-}
-
-.top-text {
-  padding: 1em 5% 0 5%;
-  width: 90%;
-  justify-content: space-between;
-}
-
-.end-middle-section-text {
-  width: 35vw;
-  height: 47%;
-  margin-bottom: 5%;
-  justify-content: flex-start;
-  align-content: space-between;
+.path-card {
   background-color: var(--foreground);
-  border-radius: 18px;
+  border-radius: 16px;
+  padding: 14px 18px;
+  width: min(560px, 92vw);
+  box-sizing: border-box;
 }
 
-@media (max-width: 768px) {
-  .end-middle-section-text {
-    width: min(420px, 86vw);
-    height: auto;
-    padding-bottom: 1em;
+.path-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.path-card-header h2 {
+  margin: 0;
+}
+
+.path-stats {
+  display: flex;
+  gap: 14px;
+  color: var(--grey-text);
+  font-weight: 700;
+}
+
+.path-chain {
+  margin: 10px 0 0 0;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .path-card {
+    padding: 12px 14px;
+  }
+
+  .path-card-header h2 {
+    font-size: 1.1em;
+  }
+
+  .path-stats {
+    font-size: 0.9em;
+  }
+
+  .path-chain {
+    font-size: 0.95em;
   }
 }
