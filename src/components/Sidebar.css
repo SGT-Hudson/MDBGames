@@ -23,6 +23,35 @@
     0px 24px 38px rgba(0, 0, 0, 0.14);
 }
 
+/* Target actor: photo with its name + age/nationality. */
+.sidebar-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.target-info {
+  text-align: center;
+}
+
+.target-name {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.target-meta {
+  margin: 4px 0 0 0;
+  color: var(--grey-text);
+  font-size: 0.95em;
+}
+
+/* The name is shown in target-info, so hide the card's own caption. */
+.sidebar-target .small-text-name {
+  display: none;
+}
+
 .give-up {
   width: fit-content;
   background-color: var(--transparent-blue);
@@ -62,8 +91,8 @@
 }
 
 @media (max-width: 600px) {
-  /* Phone: compact bar that stays pinned to the top while you browse, so the
-     target actor and the timer are always visible. */
+  /* Phone: compact bar pinned to the top:
+     [photo] [name + age/nationality] [timer] [Give Up] */
   .sidebar {
     position: sticky;
     top: 0;
@@ -95,16 +124,9 @@
     min-width: 0;
   }
 
-  .sidebar-target .sidebar-text {
-    font-size: 0.85em;
-    text-align: left;
-    margin: 0;
-    line-height: 1.1;
-  }
-
   /* Shrink the target card into a small chip. */
   .sidebar-target .small-portrait {
-    width: 46px;
+    width: 44px;
     height: auto;
     padding: 3px 3px 0 3px;
     border-radius: 8px;
@@ -116,15 +138,38 @@
     height: auto;
   }
 
-  .sidebar-target .small-text-name {
-    height: auto;
-    font-size: 9px;
+  .target-info {
+    text-align: left;
+    min-width: 0;
+    flex: 1;
   }
 
-  /* Compact timer on the right (label hidden, just the time). */
+  /* The "Find this actor" label is implied by the photo on phones. */
+  .target-info .sidebar-text {
+    display: none;
+  }
+
+  .target-name {
+    font-size: 0.9em;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .target-meta {
+    font-size: 0.7em;
+    margin: 2px 0 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Timer + Give Up grouped on the right. */
   .sidebar-controls {
     flex-direction: row;
     align-items: center;
+    gap: 8px;
     flex-shrink: 0;
   }
 
@@ -138,29 +183,21 @@
 
   .sidebar-controls .timer {
     width: auto;
-    padding: 4px 12px;
+    padding: 4px 10px;
   }
 
   .sidebar-controls .timer .large-text {
-    font-size: 1.4em;
+    font-size: 1.2em;
   }
 
-  /* Give Up pinned to the bottom of the screen, full width. */
-  .give-up-link {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 30;
-  }
-
+  /* Give Up as a compact button to the right of the timer. */
   .give-up {
-    width: 100%;
-    border-radius: 0;
-    background-color: var(--transparent-blue);
+    width: auto;
+    border-radius: 8px;
   }
 
   .give-up > p {
-    padding: 0.7em 1em;
+    padding: 0.55em 0.7em;
+    font-size: 0.95em;
   }
 }

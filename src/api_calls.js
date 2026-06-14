@@ -64,8 +64,22 @@ export const newGame = async () => {
   return actorPair;
 };
 
+// Lightweight person lookup (no credits) used to show the target actor's age
+// and nationality without the heavy combined_credits payload.
+export const getActorInfo = async (id) => {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    );
+    const data = await response.json();
+    return { ...data, type: 'actor' };
+  } catch (error) {
+    console.log('getActorInfo error', error);
+    return null;
+  }
+};
+
 export const getActorAPI = async (id) => {
-  // GETTING THE DATA FROM THE API
   let data;
   try {
     const response = await fetch(

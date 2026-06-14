@@ -11,11 +11,12 @@
   margin-top: 1em;
 }
 
-/* Current actor/movie: poster on the left, title + "known for" on the right. */
+/* Current actor/movie card:
+   - top row: poster on the left, name + age/nationality on the right
+   - bottom row: the four "known for" items in a row */
 .current-card {
   display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 16px;
   box-sizing: border-box;
   background-color: var(--bubble);
@@ -23,19 +24,26 @@
   padding: 16px;
 }
 
-.current-card .large-portrait {
+.current-top {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.current-top .large-portrait {
   flex-shrink: 0;
   width: 200px;
   height: auto;
 }
 
-.current-card .large-portrait-image {
+.current-top .large-portrait-image {
   width: 100%;
   height: auto;
 }
 
 /* The poster's own caption is hidden; the title is shown on the right. */
-.current-card .large-text-name {
+.current-top .large-text-name {
   display: none;
 }
 
@@ -53,16 +61,31 @@
   line-height: 1.2;
 }
 
+.current-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.meta-pill {
+  background-color: var(--foreground);
+  color: var(--grey-text);
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
 .known-for-label {
-  margin: 0;
+  margin: 0 0 8px 0;
   color: var(--grey-text);
   font-weight: 700;
   letter-spacing: 0.04em;
 }
 
-.known-for-grid {
+.known-for-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
@@ -87,8 +110,7 @@
 @media (max-width: 600px) {
   .playground-container {
     margin: 0;
-    /* Bottom space so content isn't hidden behind the fixed Give Up bar. */
-    padding: 14px 12px 84px 12px;
+    padding: 14px 12px 24px 12px;
     border-radius: 0;
   }
 
@@ -97,14 +119,19 @@
     padding: 12px;
   }
 
-  /* Smaller poster so it shares the row with the title and known-for. */
-  .current-card .large-portrait {
+  /* Smaller poster so it shares the row with the title and meta. */
+  .current-top .large-portrait {
     width: 38vw;
     max-width: 180px;
   }
 
   .current-title {
     font-size: 1.1em;
+  }
+
+  .meta-pill {
+    font-size: 0.8em;
+    padding: 2px 8px;
   }
 
   .known-for-label {

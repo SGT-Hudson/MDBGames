@@ -4,6 +4,7 @@ import ImageContainer from './ImageContainer';
 import './Playground.css';
 import MovieList from './MovieList';
 import Top5Item from './Top5Item';
+import { itemMeta } from '../meta';
 import { useNavigate } from 'react-router-dom';
 
 function Playground({ value, end }) {
@@ -60,20 +61,32 @@ function Playground({ value, end }) {
       {ready ? (
         <div className='playground-container'>
           <div className='current-card'>
-            <ImageContainer
-              item={currentItem}
-              size={'large'}
-              shadow={'small'}
-            />
+            <div className='current-top'>
+              <ImageContainer
+                item={currentItem}
+                size={'large'}
+                shadow={'small'}
+              />
 
-            <div className='current-info'>
-              <h2 className='current-title'>{currentItem.name}</h2>
+              <div className='current-info'>
+                <h2 className='current-title'>{currentItem.name}</h2>
+                <div className='current-meta'>
+                  {itemMeta(currentItem).map((m, i) => (
+                    <span className='meta-pill' key={i}>
+                      {m}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div className='known-for'>
               <p className='known-for-label'>
                 {currentItem.top5[0].type === 'actor'
                   ? 'Top actors'
                   : 'Known for'}
               </p>
-              <div className='known-for-grid'>
+              <div className='known-for-row'>
                 {currentItem.top5.slice(0, 4).map((item) => (
                   <Top5Item
                     key={item.id}
