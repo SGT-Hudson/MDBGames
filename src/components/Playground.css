@@ -33,13 +33,19 @@
 
 .current-top .large-portrait {
   flex-shrink: 0;
-  width: 200px;
+  width: 160px;
   height: auto;
+  /* Just the photo, no card background/padding around it. */
+  background-color: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .current-top .large-portrait-image {
   width: 100%;
   height: auto;
+  border-radius: 12px;
 }
 
 /* The poster's own caption is hidden; the title is shown on the right. */
@@ -121,8 +127,8 @@
 
   /* Smaller poster so it shares the row with the title and meta. */
   .current-top .large-portrait {
-    width: 38vw;
-    max-width: 180px;
+    width: 33vw;
+    max-width: 150px;
   }
 
   .current-title {

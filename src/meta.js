@@ -1,14 +1,5 @@
-// Helpers to format the short "age · nationality · ..." metadata shown for
-// actors, and "year · runtime · genre" for movies/TV.
-
-const MS_PER_YEAR = 31557600000; // 365.25 days
-
-export const getAge = (birthday, deathday) => {
-  if (!birthday) return null;
-  const end = deathday ? new Date(deathday) : new Date();
-  const age = Math.floor((end - new Date(birthday)) / MS_PER_YEAR);
-  return Number.isFinite(age) ? age : null;
-};
+// Helpers to format the short "years · country" metadata shown for actors,
+// and "year · runtime · genre" for movies/TV.
 
 // place_of_birth looks like "Los Angeles, California, USA" -> "USA".
 export const getCountry = (placeOfBirth) =>
@@ -20,17 +11,16 @@ export const itemMeta = (item) => {
   const lines = [];
 
   if (item.type === 'actor') {
-    const age = getAge(item.birthday, item.deathday);
-    if (age != null) {
+    if (item.birthday) {
+      const birthYear = `${item.birthday}`.slice(0, 4);
       lines.push(
         item.deathday
-          ? `Born ${`${item.birthday}`.slice(0, 4)}`
-          : `${age} years old`
+          ? `${birthYear} – ${`${item.deathday}`.slice(0, 4)}`
+          : birthYear
       );
     }
     const country = getCountry(item.place_of_birth);
     if (country) lines.push(country);
-    if (item.known_for_department) lines.push(item.known_for_department);
     return lines;
   }
 
@@ -50,3 +40,4 @@ export const itemMeta = (item) => {
   if (item.genres && item.genres[0]) lines.push(item.genres[0].name);
   return lines;
 };
+
