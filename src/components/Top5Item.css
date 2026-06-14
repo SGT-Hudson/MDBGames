@@ -5,14 +5,15 @@
   box-sizing: border-box;
   border: none;
   padding: 6px;
-  background-color: var(--bubble);
+  /* Darker than the surrounding card so the items stand out. */
+  background-color: var(--background);
   border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 }
 
 .top5-button:hover {
-  background-color: var(--image-background);
+  background-color: var(--foreground);
   transition: background-color 0.1s ease-in-out;
 }
 

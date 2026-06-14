@@ -33,7 +33,7 @@
 
 .current-top .large-portrait {
   flex-shrink: 0;
-  width: 160px;
+  width: 130px;
   height: auto;
   /* Just the photo, no card background/padding around it. */
   background-color: transparent;
@@ -127,8 +127,8 @@
 
   /* Smaller poster so it shares the row with the title and meta. */
   .current-top .large-portrait {
-    width: 33vw;
-    max-width: 150px;
+    width: 28vw;
+    max-width: 130px;
   }
 
   .current-title {
