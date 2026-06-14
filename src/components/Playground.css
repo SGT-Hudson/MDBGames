@@ -82,6 +82,18 @@
   border-radius: 999px;
 }
 
+/* Short biography (actors) / synopsis (titles), clamped to a few lines. */
+.current-bio {
+  margin: 4px 0 0 0;
+  color: var(--grey-text);
+  font-size: 0.9em;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .known-for-label {
   margin: 0 0 8px 0;
   color: var(--grey-text);
@@ -138,6 +150,11 @@
   .meta-pill {
     font-size: 0.8em;
     padding: 2px 8px;
+  }
+
+  .current-bio {
+    font-size: 0.8em;
+    -webkit-line-clamp: 5;
   }
 
   .known-for-label {

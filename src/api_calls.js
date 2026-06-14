@@ -162,14 +162,11 @@ export const getMovieAPI = async (id) => {
     actor.type = 'actor';
   });
 
-  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
-  data.cast = data.credits.cast.filter((actor) => {
-    return actor.adult === false;
-  });
-
-  // SPLITTING THE TOP 5 ACTORS
-  data.top5 = data.credits.cast.splice(0, 5);
-  data.cast = data.credits.cast;
+  // Non-adult cast; top5 is the first five, kept in the full list too so the
+  // playground can exclude whatever it shows on top without losing anyone.
+  const movieCast = data.credits.cast.filter((actor) => actor.adult === false);
+  data.top5 = movieCast.slice(0, 5);
+  data.cast = movieCast;
 
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;
@@ -198,14 +195,12 @@ export const getTvAPI = async (id) => {
     actor.type = 'actor';
   });
 
-  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
-  data.aggregate_credits.cast.filter((actor) => {
-    return actor.adult === false;
-  });
-
-  // GETTING THE TOP 5 ACTORS
-  data.top5 = data.aggregate_credits.cast.splice(0, 5);
-  data.cast = data.aggregate_credits.cast;
+  // Non-adult cast; top5 is the first five, kept in the full list too.
+  const tvCast = data.aggregate_credits.cast.filter(
+    (actor) => actor.adult === false
+  );
+  data.top5 = tvCast.slice(0, 5);
+  data.cast = tvCast;
 
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;

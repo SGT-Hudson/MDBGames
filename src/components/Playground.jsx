@@ -56,6 +56,15 @@ function Playground({ value, end }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newValue]);
 
+  // Items shown on top, and the rest of the list with those removed so nothing
+  // is duplicated (and nobody is lost).
+  const known = ready ? currentItem.top5.slice(0, 4) : [];
+  const knownIds = new Set(known.map((i) => i.id));
+  const restList = ready
+    ? currentItem.cast.filter((i) => !knownIds.has(i.id))
+    : [];
+  const bio = currentItem.biography || currentItem.overview || '';
+
   return (
     <>
       {ready ? (
@@ -77,6 +86,7 @@ function Playground({ value, end }) {
                     </span>
                   ))}
                 </div>
+                {bio ? <p className='current-bio'>{bio}</p> : null}
               </div>
             </div>
 
@@ -87,7 +97,7 @@ function Playground({ value, end }) {
                   : 'Known for'}
               </p>
               <div className='known-for-row'>
-                {currentItem.top5.slice(0, 4).map((item) => (
+                {known.map((item) => (
                   <Top5Item
                     key={item.id}
                     item={item}
@@ -100,13 +110,13 @@ function Playground({ value, end }) {
           {currentItem.type === 'actor' && ready ? (
             <div>
               <h1 className='movie-list-title'>Starred in:</h1>
-              <MovieList credits={currentItem.cast} setNewValue={setNewValue} />
+              <MovieList credits={restList} setNewValue={setNewValue} />
             </div>
           ) : (
             <div>
               <h1 className='movie-list-title'>Cast:</h1>
               <div className='card-grid'>
-                {currentItem.cast.map((actor) => {
+                {restList.map((actor) => {
                   return (
                     <Top5Item
                       key={actor.id}
