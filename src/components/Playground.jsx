@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getActorAPI, getMovieAPI, getTvAPI } from '../api_calls';
 import ImageContainer from './ImageContainer';
-import TopInfo from './TopInfo';
 import './Playground.css';
 import MovieList from './MovieList';
 import Top5Item from './Top5Item';
@@ -60,14 +59,30 @@ function Playground({ value, end }) {
     <>
       {ready ? (
         <div className='playground-container'>
-          <div className='flex-row'>
+          <div className='current-card'>
             <ImageContainer
               item={currentItem}
               size={'large'}
               shadow={'small'}
             />
 
-            <TopInfo top5={currentItem.top5} setNewValue={setNewValue} />
+            <div className='current-info'>
+              <h2 className='current-title'>{currentItem.name}</h2>
+              <p className='known-for-label'>
+                {currentItem.top5[0].type === 'actor'
+                  ? 'Top actors'
+                  : 'Known for'}
+              </p>
+              <div className='known-for-grid'>
+                {currentItem.top5.slice(0, 4).map((item) => (
+                  <Top5Item
+                    key={item.id}
+                    item={item}
+                    setNewValue={setNewValue}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
           {currentItem.type === 'actor' && ready ? (
             <div>

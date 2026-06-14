@@ -11,8 +11,59 @@
   margin-top: 1em;
 }
 
-.actor-list {
-  flex-wrap: wrap;
+/* Current actor/movie: poster on the left, title + "known for" on the right. */
+.current-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+  box-sizing: border-box;
+  background-color: var(--bubble);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.current-card .large-portrait {
+  flex-shrink: 0;
+  width: 200px;
+  height: auto;
+}
+
+.current-card .large-portrait-image {
+  width: 100%;
+  height: auto;
+}
+
+/* The poster's own caption is hidden; the title is shown on the right. */
+.current-card .large-text-name {
+  display: none;
+}
+
+.current-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.current-title {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.known-for-label {
+  margin: 0;
+  color: var(--grey-text);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.known-for-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
 }
 
 .playground-image {
@@ -41,21 +92,26 @@
     border-radius: 0;
   }
 
-  /* Smaller current actor/movie card so it doesn't fill the screen. */
-  .playground-container .large-portrait {
-    width: 50vw;
-    max-width: 200px;
-    height: auto;
-    margin: 0 auto;
+  .current-card {
+    gap: 12px;
+    padding: 12px;
   }
 
-  .playground-container .large-portrait-image {
-    width: 100%;
-    height: auto;
+  /* Smaller poster so it shares the row with the title and known-for. */
+  .current-card .large-portrait {
+    width: 38vw;
+    max-width: 180px;
   }
 
-  .movie-list-title,
-  .top-info-text {
+  .current-title {
+    font-size: 1.1em;
+  }
+
+  .known-for-label {
+    font-size: 0.95em;
+  }
+
+  .movie-list-title {
     font-size: 1.4em;
   }
 }

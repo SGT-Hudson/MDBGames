@@ -134,11 +134,6 @@ code {
 }
 
 @media (max-width: 600px) {
-  body {
-    /* decorative, fixed-size elements can slightly exceed the viewport */
-    overflow-x: hidden;
-  }
-
   .large-logo {
     width: 88vw;
     max-width: 360px;
