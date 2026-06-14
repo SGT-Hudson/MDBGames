@@ -107,6 +107,16 @@
   gap: 8px;
 }
 
+/* Inside the main card, make these darker so they stand out; the cards in the
+   general list below keep their original colour. */
+.known-for-row .top5-button {
+  background-color: var(--background);
+}
+
+.known-for-row .top5-button:hover {
+  background-color: var(--foreground);
+}
+
 .playground-image {
   box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);
 }
