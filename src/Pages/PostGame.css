@@ -77,6 +77,11 @@
 }
 
 @media (max-width: 600px) {
+  .end-container .large-logo {
+    width: 70vw;
+    max-width: 300px;
+  }
+
   .end-result {
     font-size: 1.7em;
   }
@@ -88,5 +93,47 @@
 
   .end-arrow {
     width: 20px;
+  }
+
+  /* Smaller actor names so they don't overflow the cards. */
+  .end-actors .large-text-name {
+    height: auto;
+  }
+
+  .end-actors .large-text-image,
+  .end-actors .medium-text-image {
+    font-size: 14px;
+  }
+
+  .end-actors .small-text-image,
+  .end-actors .super-small-text-image {
+    font-size: 12px;
+  }
+
+  /* NEW GAME + back on a single row. */
+  .end-buttons {
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .end-buttons > a:first-child {
+    flex: 1;
+    display: flex;
+  }
+
+  .end-buttons .large-button {
+    width: 100%;
+    padding: 0 12px;
+    height: 64px;
+    font-size: 1.3em;
+  }
+
+  .end-buttons .small-button {
+    width: 60px;
+    height: 64px;
+    flex-shrink: 0;
   }
 }
