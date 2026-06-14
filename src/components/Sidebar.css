@@ -131,9 +131,9 @@
     min-width: 0;
   }
 
-  /* Just the photo, no card around it. */
+  /* Just the photo, no card around it, and keep its full aspect (no crop). */
   .sidebar-target .small-portrait {
-    width: 44px;
+    width: 40px;
     height: auto;
     padding: 0;
     background-color: transparent;
@@ -142,9 +142,8 @@
   }
 
   .sidebar-target .small-portrait-image {
-    width: 44px;
-    height: 44px;
-    object-fit: cover;
+    width: 40px;
+    height: auto;
     border-radius: 8px;
   }
 
@@ -192,23 +191,24 @@
     display: none;
   }
 
-  .sidebar-controls .timer {
+  /* Timer and Give Up the same height/size, side by side. */
+  .sidebar-controls .timer,
+  .sidebar-controls .give-up {
+    height: 38px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: auto;
-    padding: 4px 10px;
+    padding: 0 14px;
+    border-radius: 10px;
   }
 
-  .sidebar-controls .timer .large-text {
-    font-size: 1.2em;
-  }
-
-  /* Give Up as a compact button to the right of the timer. */
-  .give-up {
-    width: auto;
-    border-radius: 8px;
-  }
-
-  .give-up > p {
-    padding: 0.55em 0.7em;
-    font-size: 0.95em;
+  .sidebar-controls .timer .large-text,
+  .sidebar-controls .give-up > p {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    font-weight: 700;
   }
 }

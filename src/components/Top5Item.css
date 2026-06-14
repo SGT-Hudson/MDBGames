@@ -43,3 +43,43 @@
   padding: 2px 7px;
   border-radius: 999px;
 }
+
+/* Titles in these small cards need a smaller font, and long titles/words
+   must wrap instead of overflowing. */
+.top5-button .text-image {
+  overflow-wrap: anywhere;
+  margin-top: 4px;
+}
+
+/* Let multi-line titles flow instead of being squeezed into a fixed height. */
+.top5-button .small-text-name {
+  height: auto;
+  display: block;
+  text-align: center;
+}
+
+.top5-button .medium-text-image {
+  font-size: 14px;
+}
+
+.top5-button .small-text-image {
+  font-size: 13px;
+}
+
+.top5-button .super-small-text-image {
+  font-size: 11px;
+}
+
+@media (max-width: 600px) {
+  .top5-button .medium-text-image {
+    font-size: 12px;
+  }
+
+  .top5-button .small-text-image {
+    font-size: 11px;
+  }
+
+  .top5-button .super-small-text-image {
+    font-size: 10px;
+  }
+}
