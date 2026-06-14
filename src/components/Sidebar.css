@@ -271,12 +271,24 @@
 
 .modal-close {
   position: absolute;
-  top: 6px;
-  right: 12px;
-  background: transparent;
+  top: 24px;
+  right: 24px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
   border: none;
+  border-radius: 50%;
   color: #fff;
-  font-size: 30px;
+  font-size: 22px;
   line-height: 1;
   cursor: pointer;
+  transition: background 0.1s ease-in-out;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.85);
 }
