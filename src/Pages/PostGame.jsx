@@ -114,6 +114,7 @@ function PostGame() {
                 clicks={clicks}
                 best={false}
                 highlight={commonNodes}
+                markRepeats={true}
               />
             ) : (
               <p className='time-wasted'>Time wasted: {timeString}</p>

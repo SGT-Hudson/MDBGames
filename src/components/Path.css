@@ -53,6 +53,12 @@
   color: #10271a;
 }
 
+/* Nodes the player visited more than once. */
+.path-node.repeated {
+  background-color: #f5a623;
+  color: #2b1d00;
+}
+
 .path-arrow {
   color: var(--blue);
   font-weight: 900;
