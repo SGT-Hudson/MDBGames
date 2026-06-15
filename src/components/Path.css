@@ -26,9 +26,37 @@
 }
 
 .path-chain {
-  margin: 10px 0 0 0;
-  line-height: 1.5;
-  word-break: break-word;
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.path-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.path-node {
+  background-color: var(--bubble);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* Nodes that also appear in the other path are highlighted. */
+.path-node.common {
+  background-color: #2ecc71;
+  color: #10271a;
+}
+
+.path-arrow {
+  color: var(--blue);
+  font-weight: 900;
+  font-size: 1.1em;
 }
 
 @media (max-width: 600px) {

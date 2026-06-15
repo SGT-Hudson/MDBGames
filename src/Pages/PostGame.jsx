@@ -7,11 +7,14 @@ import { ReactComponent as Arrow } from '../images/arrow.svg';
 import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getBestClickPath, updateUserStats, auth } from '../firebase';
+import { formatDuration } from '../meta';
 import './PostGame.css';
 
 function PostGame() {
   const [bestPath, setBestPath] = useState([]);
   const [bestPathName, setBestPathName] = useState(null);
+  const [bestTime, setBestTime] = useState(null);
+  const [bestIsMine, setBestIsMine] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
 
   const location = useLocation();
@@ -24,9 +27,6 @@ function PostGame() {
   }
   const time = data[3];
 
-  let displayTime;
-  let timeString;
-
   onAuthStateChanged(auth, (currentUser) => {
     setCurrentUser(currentUser);
   });
@@ -34,11 +34,12 @@ function PostGame() {
   useEffect(() => {
     if (currentUser) {
       const getInfo = async () => {
-        const { bestPath, name } = await getBestClickPath(
+        const { bestPath, name, time: best, isMine } = await getBestClickPath(
           auth.currentUser.uid,
           startingActor.id,
           endingActor.id,
-          data[2]
+          data[2],
+          time
         );
 
         let dataForUpdate = {};
@@ -61,24 +62,24 @@ function PostGame() {
         await updateUserStats(currentUser, dataForUpdate);
         setBestPath(bestPath);
         setBestPathName(name);
+        setBestTime(best);
+        setBestIsMine(isMine);
       };
       getInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
-  if (time > 3599) {
-    displayTime = new Date(time * 1000).toISOString().slice(-13, -5);
-    timeString = displayTime + ' hours';
-  } else if (time > 59) {
-    displayTime = new Date(time * 1000).toISOString().slice(-10, -5);
-    timeString = displayTime + ' minutes';
-  } else {
-    timeString = time + ' seconds';
-  }
-
+  const timeString = formatDuration(time);
   const won = Boolean(data[2]);
   const clicks = data[2] ? data[2].length - 1 : null;
+
+  // Highlight the nodes of the player's path that also appear in the best path.
+  const commonNodes =
+    won && bestPath && bestPath.length && !bestIsMine
+      ? new Set(path.filter((node) => bestPath.includes(node)))
+      : null;
+  const bestClicks = bestPath && bestPath.length ? bestPath.length - 1 : null;
 
   return (
     <>
@@ -107,12 +108,23 @@ function PostGame() {
                 time={timeString}
                 clicks={clicks}
                 best={false}
+                highlight={commonNodes}
               />
             ) : (
               <p className='time-wasted'>Time wasted: {timeString}</p>
             )}
-            {currentUser ? (
-              <Path path={bestPath} best={true} userName={bestPathName} />
+            {currentUser && bestPath && bestPath.length ? (
+              bestIsMine ? (
+                <div className='best-banner'>🏆 You hold the best path!</div>
+              ) : (
+                <Path
+                  path={bestPath}
+                  best={true}
+                  userName={bestPathName}
+                  time={formatDuration(bestTime)}
+                  clicks={bestClicks}
+                />
+              )
             ) : null}
           </div>
 

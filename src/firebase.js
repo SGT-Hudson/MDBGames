@@ -153,47 +153,66 @@ export const getBestClickPath = async (
   userId,
   initActorID,
   endActorID,
-  outPath
+  outPath,
+  outTime
 ) => {
   // Always return a consistent shape so the UI can destructure safely.
-  if (!userId) return { bestPath: outPath, name: null };
+  if (!userId) {
+    return { bestPath: outPath, name: null, time: outTime, isMine: false };
+  }
 
-  let bestPath = outPath;
   // The current player's own name (reading our own user doc is always allowed
   // by the security rules — we never read other users' documents here).
-  let bestName = null;
+  let myName = null;
   try {
     const me = await getUserDocument(userId);
-    bestName = me ? me.name : null;
+    myName = me ? me.name : null;
   } catch (error) {
     console.log('Error getting current user', error.message);
   }
 
   // A "give up" run has no path to compare against or store.
   if (!outPath) {
-    return { bestPath: null, name: bestName };
+    return { bestPath: null, name: myName, time: null, isMine: false };
   }
+
+  // Default: our own run is the best (used when there's no stored record yet).
+  let best = { path: outPath, uid: userId, name: myName, time: outTime };
 
   try {
     const bestClickPathRef = doc(db, 'bestclickpath', `${initActorID}`);
     const snapShot = await getDoc(bestClickPathRef);
     const stored = snapShot.exists() ? snapShot.data()[endActorID] : null;
 
-    if (stored && stored.path && stored.path.length <= outPath.length) {
-      // An existing record is as good or better — show it. The owner's name is
-      // stored alongside the path, so we don't need to read their profile.
-      bestPath = stored.path;
-      bestName = stored.name || bestName;
+    // The stored record wins on fewer clicks (shorter path); ties are broken by
+    // the faster time.
+    const storedHasTime = typeof stored?.time === 'number';
+    const storedIsBetter =
+      stored &&
+      stored.path &&
+      (stored.path.length < outPath.length ||
+        (stored.path.length === outPath.length &&
+          storedHasTime &&
+          stored.time <= outTime));
+
+    if (storedIsBetter) {
+      best = {
+        path: stored.path,
+        uid: stored.uid,
+        name: stored.name || null,
+        time: storedHasTime ? stored.time : null,
+      };
     } else {
-      // Our run is the new best — save it. `merge` preserves the records for
-      // other destination actors stored in the same document.
+      // Our run is the new best — save it (with time). `merge` preserves the
+      // records for other destination actors stored in the same document.
       await setDoc(
         bestClickPathRef,
         {
           [endActorID]: {
             path: outPath,
             uid: userId,
-            name: bestName,
+            name: myName,
+            time: outTime,
           },
         },
         { merge: true }
@@ -203,5 +222,10 @@ export const getBestClickPath = async (
     console.log('Error getting best click path', error.message);
   }
 
-  return { bestPath, name: bestName };
+  return {
+    bestPath: best.path,
+    name: best.name,
+    time: best.time,
+    isMine: best.uid === userId,
+  };
 };

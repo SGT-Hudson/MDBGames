@@ -70,6 +70,20 @@
   font-size: 1.2em;
 }
 
+/* Shown instead of the best-path card when the player already holds it. */
+.best-banner {
+  width: min(560px, 92vw);
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgba(46, 204, 113, 0.15);
+  border: 2px solid #2ecc71;
+  color: #2ecc71;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 14px 18px;
+  border-radius: 16px;
+}
+
 .end-buttons {
   justify-content: center;
   gap: 14px;
