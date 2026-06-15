@@ -33,6 +33,12 @@ code {
   font-weight: 300;
 }
 
+/* React Router <Link> renders an anchor; remove the default underline so it
+   doesn't show through the buttons it wraps. */
+a {
+  text-decoration: none;
+}
+
 /* GENERAL FLEX CSS ---------------------------- */
 .flex-column {
   display: flex;

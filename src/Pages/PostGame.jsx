@@ -100,6 +100,11 @@ function PostGame() {
             <ImageContainer item={endingActor} size={'large'} />
           </div>
 
+          {/* ----When the player already holds the best path-------- */}
+          {currentUser && bestIsMine && bestPath && bestPath.length ? (
+            <div className='best-banner'>🏆 You hold the best path!</div>
+          ) : null}
+
           {/* -------------------Paths------------------------------- */}
           <div className='end-paths'>
             {won ? (
@@ -113,18 +118,14 @@ function PostGame() {
             ) : (
               <p className='time-wasted'>Time wasted: {timeString}</p>
             )}
-            {currentUser && bestPath && bestPath.length ? (
-              bestIsMine ? (
-                <div className='best-banner'>🏆 You hold the best path!</div>
-              ) : (
-                <Path
-                  path={bestPath}
-                  best={true}
-                  userName={bestPathName}
-                  time={formatDuration(bestTime)}
-                  clicks={bestClicks}
-                />
-              )
+            {currentUser && !bestIsMine && bestPath && bestPath.length ? (
+              <Path
+                path={bestPath}
+                best={true}
+                userName={bestPathName}
+                time={formatDuration(bestTime)}
+                clicks={bestClicks}
+              />
             ) : null}
           </div>
 
