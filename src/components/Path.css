@@ -1,21 +1,84 @@
-.path {
-  margin: auto;
-  text-align: center;
-  width: 90%;
-}
-
-.top-text {
-  padding: 1em 5% 0 5%;
-  width: 90%;
-  justify-content: space-between;
-}
-
-.end-middle-section-text {
-  width: 35vw;
-  height: 47%;
-  margin-bottom: 5%;
-  justify-content: flex-start;
-  align-content: space-between;
+.path-card {
   background-color: var(--foreground);
-  border-radius: 18px;
+  border-radius: 16px;
+  padding: 14px 18px;
+  width: min(560px, 92vw);
+  box-sizing: border-box;
+}
+
+.path-card-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+}
+
+.path-card-header h2 {
+  margin: 0;
+}
+
+.path-stats {
+  display: flex;
+  gap: 14px;
+  color: var(--grey-text);
+  font-weight: 700;
+}
+
+.path-chain {
+  margin: 12px 0 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.path-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.path-node {
+  background-color: var(--bubble);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+/* Nodes that also appear in the other path are highlighted. */
+.path-node.common {
+  background-color: #2ecc71;
+  color: #10271a;
+}
+
+/* Nodes the player visited more than once. */
+.path-node.repeated {
+  background-color: #f5a623;
+  color: #2b1d00;
+}
+
+.path-arrow {
+  color: var(--blue);
+  font-weight: 900;
+  font-size: 1.1em;
+}
+
+@media (max-width: 600px) {
+  .path-card {
+    padding: 12px 14px;
+  }
+
+  .path-card-header h2 {
+    font-size: 1.1em;
+  }
+
+  .path-stats {
+    font-size: 0.9em;
+  }
+
+  .path-chain {
+    font-size: 0.95em;
+  }
 }

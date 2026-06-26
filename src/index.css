@@ -33,6 +33,12 @@ code {
   font-weight: 300;
 }
 
+/* React Router <Link> renders an anchor; remove the default underline so it
+   doesn't show through the buttons it wraps. */
+a {
+  text-decoration: none;
+}
+
 /* GENERAL FLEX CSS ---------------------------- */
 .flex-column {
   display: flex;
@@ -85,6 +91,16 @@ code {
   transition: color 0.1s ease-in-out;
 }
 
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.button:disabled:hover {
+  background-color: var(--background);
+  color: var(--blue);
+}
+
 .large-button {
   width: 376px;
   height: 72px;
@@ -112,4 +128,44 @@ code {
 
 .no-gap {
   gap: 0;
+}
+
+/* RESPONSIVE ---------------------------------------- */
+@media (max-width: 768px) {
+  /* Keep wide content rows from overflowing on small screens. */
+  .flex-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .large-logo {
+    width: 88vw;
+    max-width: 360px;
+    height: auto;
+  }
+
+  .small-logo {
+    width: 55vw;
+    max-width: 220px;
+    height: auto;
+  }
+
+  .button {
+    font-size: 1.5em;
+    border-width: 6px;
+  }
+
+  .large-button {
+    width: min(376px, 88vw);
+  }
+
+  .medium-button {
+    width: min(288px, 80vw);
+  }
+
+  .large-text {
+    font-size: 1.9em;
+  }
 }

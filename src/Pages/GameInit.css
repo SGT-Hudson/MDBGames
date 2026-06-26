@@ -6,6 +6,64 @@
   height: 90vh;
 }
 
+.game-intro {
+  max-width: 720px;
+  margin: 0 auto 1.5em auto;
+  padding: 0 16px;
+  text-align: center;
+  color: var(--grey-text);
+  font-size: 1.3em;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.start-buttons {
+  align-items: center;
+}
+
+.randomize-icon {
+  width: 34px;
+  height: 34px;
+  stroke: var(--blue);
+}
+
+.button:hover .randomize-icon {
+  stroke: var(--background);
+}
+
+/* Loading skeleton shown in place of an actor card until its photo loads. */
+.skeleton-card {
+  justify-content: flex-start;
+}
+
+.skeleton-block,
+.skeleton-line {
+  background: linear-gradient(90deg, #444 25%, #5a5a5a 37%, #444 63%);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.4s ease infinite;
+}
+
+.skeleton-block {
+  aspect-ratio: 280 / 405;
+  border-radius: 12px;
+}
+
+.skeleton-line {
+  height: 20px;
+  width: 70%;
+  margin: 10px auto 4px auto;
+  border-radius: 6px;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 img {
   width: 250px;
 }
@@ -44,5 +102,128 @@ img {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+/* The small chevron is only used on phones; the animated bar is desktop. */
+.mobile-arrow {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  /* Group logo / intro / cards near the top and pin the buttons to the
+     bottom, so there's no large empty gap in the middle. */
+  .start-container {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100svh;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 14px 8px;
+    box-sizing: border-box;
+  }
+
+  .start-container .large-logo {
+    width: 64vw;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  /* Keep the intro short and tight so the whole screen still fits. */
+  .game-intro {
+    font-size: 0.95em;
+    margin: 0 auto;
+    padding: 0 10px;
+  }
+
+  /* Keep the two portraits side by side instead of wrapping. */
+  .start-middle-section {
+    flex-wrap: nowrap;
+    gap: 6px;
+    margin-bottom: 0;
+    width: 100%;
+  }
+
+  .start-middle-section .large-portrait {
+    width: 40vw;
+    height: auto;
+    padding: 5px 5px 0 5px;
+    box-sizing: border-box;
+  }
+
+  .start-middle-section .large-portrait-image {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Drop the playful tilt on small screens to save space and avoid overlap. */
+  .start-middle-section .left,
+  .start-middle-section .right {
+    transform: none;
+  }
+
+  /* Shrink the actor names so they don't overflow the narrower cards. */
+  .start-middle-section .large-text-name {
+    height: auto;
+  }
+
+  .start-middle-section .large-text-image,
+  .start-middle-section .medium-text-image {
+    font-size: 13px;
+  }
+
+  .start-middle-section .small-text-image,
+  .start-middle-section .super-small-text-image {
+    font-size: 11px;
+  }
+
+  /* Swap the big animated arrow for a small chevron between the portraits. */
+  .desktop-arrows {
+    display: none;
+  }
+
+  .mobile-arrow {
+    display: block;
+    flex-shrink: 0;
+    width: 22px;
+    height: auto;
+  }
+
+  .mobile-arrow path {
+    fill: var(--blue);
+  }
+
+  /* Back · randomize · play, all on one row pinned to the bottom. */
+  .start-buttons {
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+    margin-top: auto;
+  }
+
+  /* The play button is wrapped in a <Link>, so the link is the flex item
+     that needs to stretch; the button just fills it. */
+  .start-buttons > a:last-child {
+    flex: 1;
+    display: flex;
+  }
+
+  .start-container .large-button {
+    width: 100%;
+    min-width: 0;
+    padding: 0 12px;
+    height: 64px;
+    font-size: 1.3em;
+  }
+
+  .start-container .small-button {
+    width: 60px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+
+  .randomize-icon {
+    width: 30px;
+    height: 30px;
   }
 }

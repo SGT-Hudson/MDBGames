@@ -11,10 +11,167 @@
   margin-top: 1em;
 }
 
-.actor-list {
+/* Current actor/movie card:
+   - top row: poster on the left, name + age/nationality on the right
+   - bottom row: the four "known for" items in a row */
+.current-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  background-color: var(--bubble);
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.current-top {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.current-top .large-portrait {
+  flex-shrink: 0;
+  width: 130px;
+  height: auto;
+  /* Just the photo, no card background/padding around it. */
+  background-color: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.current-top .large-portrait-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* The poster's own caption is hidden; the title is shown on the right. */
+.current-top .large-text-name {
+  display: none;
+}
+
+.current-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.current-title {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.current-meta {
+  display: flex;
   flex-wrap: wrap;
+  gap: 6px;
+}
+
+.meta-pill {
+  background-color: var(--foreground);
+  color: var(--grey-text);
+  font-size: 0.85em;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* Short biography (actors) / synopsis (titles), clamped to a few lines. */
+.current-bio {
+  margin: 4px 0 0 0;
+  color: var(--grey-text);
+  font-size: 0.9em;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.known-for-label {
+  margin: 0 0 8px 0;
+  color: var(--grey-text);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.known-for-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+/* Inside the main card, make these darker so they stand out; the cards in the
+   general list below keep their original colour. */
+.known-for-row .top5-button {
+  background-color: var(--background);
+}
+
+.known-for-row .top5-button:hover {
+  background-color: var(--foreground);
 }
 
 .playground-image {
   box-shadow: 0px 1px 8px -4px rgba(0, 0, 0, 0.75);
+}
+
+@media (max-width: 768px) {
+  /* Stack the sidebar above the playground instead of side-by-side. */
+  .game-container {
+    flex-direction: column;
+  }
+
+  .playground-container {
+    margin: 16px;
+    padding: 20px;
+    box-sizing: border-box;
+    width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .playground-container {
+    margin: 0;
+    padding: 14px 12px 24px 12px;
+    border-radius: 0;
+  }
+
+  .current-card {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  /* Smaller poster so it shares the row with the title and meta. */
+  .current-top .large-portrait {
+    width: 28vw;
+    max-width: 130px;
+  }
+
+  .current-title {
+    font-size: 1.1em;
+  }
+
+  .meta-pill {
+    font-size: 0.8em;
+    padding: 2px 8px;
+  }
+
+  .current-bio {
+    font-size: 0.8em;
+    -webkit-line-clamp: 5;
+  }
+
+  .known-for-label {
+    font-size: 0.95em;
+  }
+
+  .movie-list-title {
+    font-size: 1.4em;
+  }
 }

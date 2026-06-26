@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ReactComponent as EmptyActor } from '../images/empty_profile_photo.svg';
 import { ReactComponent as EmptyMovie } from '../images/empty_movie_photo.svg';
 import './ImageContainer.css';
@@ -8,6 +8,13 @@ function ImageContainer(props) {
   let size = props.size;
   const position = props.position || '';
   const shadow = props.shadow || 'large';
+
+  // Fall back to the default placeholder if the image fails to load.
+  const [errored, setErrored] = useState(false);
+  useEffect(() => {
+    setErrored(false);
+  }, [item.image]);
+  const showImage = item.image && !errored;
 
   let textSize;
   if (size === 'large') {
@@ -30,11 +37,12 @@ function ImageContainer(props) {
           className={`portrait ${size}-portrait ${position} ${shadow}-shadow`}
         >
           <div>
-            {item.image ? (
+            {showImage ? (
               <img
                 className={`${size}-portrait-image`}
                 src={item.image}
                 alt={item.name}
+                onError={() => setErrored(true)}
               />
             ) : (
               <div className={`${size}-portrait-image empty-image`}>

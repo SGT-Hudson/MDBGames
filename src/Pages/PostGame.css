@@ -1,15 +1,153 @@
-.end-middle-section {
-  justify-content: center;
-  gap: 2em;
+.end-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 12px 32px 12px;
+  box-sizing: border-box;
 }
 
 .end-logo {
-  width: 100%;
-  margin-top: 2em;
+  margin-top: 1em;
+}
+
+.end-result {
+  margin: 0;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  font-size: 2.2em;
   text-align: center;
+}
+
+.end-result.won {
+  color: var(--green);
+}
+
+.end-result.lost {
+  color: var(--red);
+}
+
+/* Start -> end actors side by side with a small arrow. */
+.end-actors {
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.end-actors .large-portrait {
+  width: 170px;
+  height: auto;
+}
+
+.end-actors .large-portrait-image {
+  width: 100%;
+  height: auto;
+}
+
+.end-arrow {
+  flex-shrink: 0;
+  width: 28px;
+  height: auto;
+}
+
+.end-arrow path {
+  fill: var(--blue);
+}
+
+.end-paths {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.time-wasted {
+  margin: 0;
+  color: var(--grey-text);
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+/* Shown instead of the best-path card when the player already holds it. */
+.best-banner {
+  width: min(560px, 92vw);
+  box-sizing: border-box;
+  text-align: center;
+  background-color: rgba(46, 204, 113, 0.15);
+  border: 2px solid #2ecc71;
+  color: #2ecc71;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 14px 18px;
+  border-radius: 16px;
 }
 
 .end-buttons {
   justify-content: center;
-  margin-top: 7vh;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .end-container .large-logo {
+    width: 70vw;
+    max-width: 300px;
+  }
+
+  .end-result {
+    font-size: 1.7em;
+  }
+
+  .end-actors .large-portrait {
+    width: 36vw;
+    max-width: 150px;
+  }
+
+  .end-arrow {
+    width: 20px;
+  }
+
+  /* Smaller actor names so they don't overflow the cards. */
+  .end-actors .large-text-name {
+    height: auto;
+  }
+
+  .end-actors .large-text-image,
+  .end-actors .medium-text-image {
+    font-size: 14px;
+  }
+
+  .end-actors .small-text-image,
+  .end-actors .super-small-text-image {
+    font-size: 12px;
+  }
+
+  /* NEW GAME + back on a single row. */
+  .end-buttons {
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+    padding: 0 12px;
+    box-sizing: border-box;
+  }
+
+  .end-buttons > a:first-child {
+    flex: 1;
+    display: flex;
+  }
+
+  .end-buttons .large-button {
+    width: 100%;
+    padding: 0 12px;
+    height: 64px;
+    font-size: 1.3em;
+  }
+
+  .end-buttons .small-button {
+    width: 60px;
+    height: 64px;
+    flex-shrink: 0;
+  }
 }

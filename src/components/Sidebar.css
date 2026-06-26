@@ -23,6 +23,52 @@
     0px 24px 38px rgba(0, 0, 0, 0.14);
 }
 
+/* Target actor: photo with its name + years/country. */
+.sidebar-target {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.target-photo-btn {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: block;
+  flex-shrink: 0;
+}
+
+.target-info {
+  text-align: center;
+}
+
+.target-name {
+  margin: 0;
+  font-weight: 700;
+  color: #fff;
+}
+
+.target-meta {
+  margin: 4px 0 0 0;
+  color: var(--grey-text);
+  font-size: 0.95em;
+}
+
+/* The name is shown in target-info, so hide the card's own caption. */
+.sidebar-target .small-text-name {
+  display: none;
+}
+
+.sidebar-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
 .give-up {
   width: fit-content;
   background-color: var(--transparent-blue);
@@ -39,4 +85,210 @@
   font-size: 1.3em;
   font-weight: bold;
   color: var(--background);
+}
+
+@media (max-width: 768px) {
+  /* Tablet: drop out of the fixed layout and sit at the top of the page. */
+  .sidebar {
+    position: static;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1.5em;
+    padding: 16px 16px 0 16px;
+    box-sizing: border-box;
+  }
+
+  .sidebar-text {
+    font-size: 1.5em;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Phone: compact bar pinned to the top:
+     [photo] [name + age/nationality] [timer] [Give Up] */
+  .sidebar {
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 12px;
+    box-sizing: border-box;
+    background-color: var(--background);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+    z-index: 30;
+    overflow-x: visible;
+  }
+
+  .sidebar-logo {
+    display: none;
+  }
+
+  .sidebar-target {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Just the photo, no card around it, and keep its full aspect (no crop). */
+  .sidebar-target .small-portrait {
+    width: 40px;
+    height: auto;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    flex-shrink: 0;
+  }
+
+  .sidebar-target .small-portrait-image {
+    width: 40px;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .target-info {
+    text-align: left;
+    min-width: 0;
+    flex: 1;
+  }
+
+  /* The "Find this actor" label is implied by the photo on phones. */
+  .target-info .sidebar-text {
+    display: none;
+  }
+
+  .target-name {
+    font-size: 0.9em;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .target-meta {
+    font-size: 0.7em;
+    margin: 2px 0 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Timer + Give Up side by side on the right. */
+  .sidebar-controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .sidebar-controls .timer-container {
+    flex-direction: row;
+  }
+
+  .sidebar-controls .timer-container .blue-text {
+    display: none;
+  }
+
+  /* Timer and Give Up the same height/size, side by side. */
+  .sidebar-controls .timer,
+  .sidebar-controls .give-up {
+    height: 38px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    padding: 0 14px;
+    border-radius: 10px;
+  }
+
+  .sidebar-controls .timer .large-text,
+  .sidebar-controls .give-up > p {
+    margin: 0;
+    padding: 0;
+    font-size: 1em;
+    font-weight: 700;
+  }
+}
+
+/* Modal shown when tapping the target actor's photo. */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  position: relative;
+  background-color: var(--foreground);
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.modal-image {
+  width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.modal-name {
+  margin: 0;
+  text-align: center;
+  font-weight: 700;
+}
+
+.modal-meta {
+  margin: 0;
+  color: var(--grey-text);
+  font-weight: 700;
+}
+
+.modal-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.55);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.1s ease-in-out;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.85);
 }

@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './User.css';
-import {
-  signOutUser,
-  createUserDocument,
-  getUserDocument,
-  auth,
-} from '../firebase';
+import { signOutUser, getUserDocument, auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { ReactComponent as Logo } from '../images/logo.svg';

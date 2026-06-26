@@ -8,6 +8,8 @@ import {
   signOut,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -34,35 +36,33 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const provider = new GoogleAuthProvider();
 
+// Each auth helper lets Firebase errors propagate so the caller (Login) can
+// surface a message to the user instead of navigating on a failed sign-in.
 export const signInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
-  console.log(result);
-  const userData = await createUserDocument(result.user);
-  return userData;
+  return createUserDocument(result.user);
+};
+
+// Popups are unreliable on mobile browsers (blocked / not supported), so we
+// fall back to a full-page redirect flow on those devices.
+export const signInWithGoogleRedirect = async () => {
+  await signInWithRedirect(auth, provider);
+};
+
+export const getGoogleRedirectResult = async () => {
+  const result = await getRedirectResult(auth);
+  if (!result) return null;
+  return createUserDocument(result.user);
 };
 
 export const registerWithEmail = async (email, password) => {
-  try {
-    const result = await createUserWithEmailAndPassword(auth, email, password);
-
-    console.log(result);
-    const userData = await createUserDocument(result.user);
-    return userData;
-  } catch (error) {
-    console.log(error.message);
-    return error;
-  }
+  const result = await createUserWithEmailAndPassword(auth, email, password);
+  return createUserDocument(result.user);
 };
 
 export const logInWithEmail = async (email, password) => {
-  try {
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    const userData = await createUserDocument(result.user);
-    return userData;
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+  const result = await signInWithEmailAndPassword(auth, email, password);
+  return createUserDocument(result.user);
 };
 
 export const signOutUser = async () => {
@@ -153,53 +153,79 @@ export const getBestClickPath = async (
   userId,
   initActorID,
   endActorID,
-  outPath
+  outPath,
+  outTime
 ) => {
-  if (!userId) return;
-  let bestPath = outPath;
-  let uid = userId;
+  // Always return a consistent shape so the UI can destructure safely.
+  if (!userId) {
+    return { bestPath: outPath, name: null, time: outTime, isMine: false };
+  }
+
+  // The current player's own name (reading our own user doc is always allowed
+  // by the security rules — we never read other users' documents here).
+  let myName = null;
+  try {
+    const me = await getUserDocument(userId);
+    myName = me ? me.name : null;
+  } catch (error) {
+    console.log('Error getting current user', error.message);
+  }
+
+  // A "give up" run has no path to compare against or store.
+  if (!outPath) {
+    return { bestPath: null, name: myName, time: null, isMine: false };
+  }
+
+  // Default: our own run is the best (used when there's no stored record yet).
+  let best = { path: outPath, uid: userId, name: myName, time: outTime };
+
   try {
     const bestClickPathRef = doc(db, 'bestclickpath', `${initActorID}`);
     const snapShot = await getDoc(bestClickPathRef);
+    const stored = snapShot.exists() ? snapShot.data()[endActorID] : null;
 
-    if (snapShot.exists()) {
-      if (snapShot.data()[endActorID]) {
-        const path = snapShot.data()[endActorID].path;
-        const storedUid = snapShot.data()[endActorID].uid;
-        if (path.length <= outPath.length) {
-          bestPath = path;
-          uid = storedUid;
-        }
-      } else {
-        await setDoc(bestClickPathRef, {
+    // The stored record wins on fewer clicks (shorter path); ties are broken by
+    // the faster time.
+    const storedHasTime = typeof stored?.time === 'number';
+    const storedIsBetter =
+      stored &&
+      stored.path &&
+      (stored.path.length < outPath.length ||
+        (stored.path.length === outPath.length &&
+          storedHasTime &&
+          stored.time <= outTime));
+
+    if (storedIsBetter) {
+      best = {
+        path: stored.path,
+        uid: stored.uid,
+        name: stored.name || null,
+        time: storedHasTime ? stored.time : null,
+      };
+    } else {
+      // Our run is the new best — save it (with time). `merge` preserves the
+      // records for other destination actors stored in the same document.
+      await setDoc(
+        bestClickPathRef,
+        {
           [endActorID]: {
             path: outPath,
-            uid,
+            uid: userId,
+            name: myName,
+            time: outTime,
           },
-        });
-      }
-    } else {
-      await setDoc(bestClickPathRef, {
-        [endActorID]: {
-          path: outPath,
-          uid,
         },
-      });
+        { merge: true }
+      );
     }
   } catch (error) {
     console.log('Error getting best click path', error.message);
   }
 
-  // get the info from the user and return the best path
-  try {
-    const userData = await getUserDocument(uid);
-    const name = userData.name;
-    return {
-      bestPath,
-      name,
-    };
-  } catch (error) {
-    console.log('Error getting user', error.message);
-    return 1;
-  }
+  return {
+    bestPath: best.path,
+    name: best.name,
+    time: best.time,
+    isMine: best.uid === userId,
+  };
 };

@@ -49,3 +49,24 @@
 .long-line {
   width: 320px;
 }
+
+@media (max-width: 600px) {
+  .profile-section {
+    padding: 0 16px;
+  }
+
+  .stats-bubble {
+    width: 100%;
+    max-width: 320px;
+    padding: 15px 24px 20px 24px;
+    box-sizing: border-box;
+  }
+
+  .long-line {
+    width: 100%;
+  }
+
+  .stats-item {
+    font-size: 0.95em;
+  }
+}

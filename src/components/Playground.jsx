@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getActorAPI, getMovieAPI, getTvAPI } from '../api_calls';
 import ImageContainer from './ImageContainer';
-import TopInfo from './TopInfo';
 import './Playground.css';
 import MovieList from './MovieList';
 import Top5Item from './Top5Item';
+import { itemMeta } from '../meta';
 import { useNavigate } from 'react-router-dom';
 
 function Playground({ value, end }) {
@@ -12,7 +12,7 @@ function Playground({ value, end }) {
   const [currentItem, setCurrentItem] = useState({});
   const [newValue, setNewValue] = useState(['actor', value.id, value.name]);
   const [path, setPath] = useState([]);
-  const [time, setTime] = useState(new Date().getTime());
+  const [time] = useState(new Date().getTime());
 
   const navigate = useNavigate();
 
@@ -53,31 +53,70 @@ function Playground({ value, end }) {
         state: [value, end, [...path, end.name], timeInSec],
       });
     } else getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [newValue]);
+
+  // Items shown on top, and the rest of the list with those removed so nothing
+  // is duplicated (and nobody is lost).
+  const known = ready ? currentItem.top5.slice(0, 4) : [];
+  const knownIds = new Set(known.map((i) => i.id));
+  const restList = ready
+    ? currentItem.cast.filter((i) => !knownIds.has(i.id))
+    : [];
+  const bio = currentItem.biography || currentItem.overview || '';
 
   return (
     <>
       {ready ? (
         <div className='playground-container'>
-          <div className='flex-row'>
-            <ImageContainer
-              item={currentItem}
-              size={'large'}
-              shadow={'small'}
-            />
+          <div className='current-card'>
+            <div className='current-top'>
+              <ImageContainer
+                item={currentItem}
+                size={'large'}
+                shadow={'small'}
+              />
 
-            <TopInfo top5={currentItem.top5} setNewValue={setNewValue} />
+              <div className='current-info'>
+                <h2 className='current-title'>{currentItem.name}</h2>
+                <div className='current-meta'>
+                  {itemMeta(currentItem).map((m, i) => (
+                    <span className='meta-pill' key={i}>
+                      {m}
+                    </span>
+                  ))}
+                </div>
+                {bio ? <p className='current-bio'>{bio}</p> : null}
+              </div>
+            </div>
+
+            <div className='known-for'>
+              <p className='known-for-label'>
+                {currentItem.top5[0].type === 'actor'
+                  ? 'Top actors'
+                  : 'Known for'}
+              </p>
+              <div className='known-for-row'>
+                {known.map((item) => (
+                  <Top5Item
+                    key={item.id}
+                    item={item}
+                    setNewValue={setNewValue}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
           {currentItem.type === 'actor' && ready ? (
             <div>
               <h1 className='movie-list-title'>Starred in:</h1>
-              <MovieList credits={currentItem.cast} setNewValue={setNewValue} />
+              <MovieList credits={restList} setNewValue={setNewValue} />
             </div>
           ) : (
             <div>
               <h1 className='movie-list-title'>Cast:</h1>
-              <div className='flex-row actor-list'>
-                {currentItem.cast.map((actor) => {
+              <div className='card-grid'>
+                {restList.map((actor) => {
                   return (
                     <Top5Item
                       key={actor.id}

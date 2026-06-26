@@ -1,11 +1,6 @@
 const image500 = process.env.REACT_APP_API_IMAGE;
 const maxPage = 50;
 
-const randActorPicker = (data) => {
-  const randomActor = Math.floor(Math.random() * 20);
-  return data[randomActor];
-};
-
 const checkAdultContent = (actor) => {
   if (actor.known_for) {
     for (let i = 0; i < actor.known_for.length; i++) {
@@ -24,50 +19,67 @@ const checkAdultContent = (actor) => {
 };
 
 export const newGame = async () => {
-  const randomPage = Math.floor(Math.random() * maxPage + 1);
-  // const randomPage = 5;
+  // Pick two distinct, non-adult actors from a page of results.
+  const pickPair = (actorList) => {
+    const valid = actorList.filter((actor) => actor && !checkAdultContent(actor));
+    if (valid.length < 2) return null;
 
-  let data;
-  try {
-    const response = await fetch(
-      `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
-    );
-    data = await response.json();
-  } catch (error) {}
+    const first = valid[Math.floor(Math.random() * valid.length)];
+    let second = first;
+    // valid.length >= 2 guarantees this terminates.
+    while (second.id === first.id) {
+      second = valid[Math.floor(Math.random() * valid.length)];
+    }
+    return [first, second];
+  };
 
-  const actorList = data.results;
-  // Randomly select two actors from the API response
-  const actorPair = [{}, {}];
+  // Try a few random pages until we get a usable pair, so a flaky request or
+  // an unlucky page can't leave the game stuck.
+  let actorPair = null;
+  for (let attempt = 0; attempt < 5 && !actorPair; attempt++) {
+    const randomPage = Math.floor(Math.random() * maxPage + 1);
+    try {
+      const response = await fetch(
+        `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${randomPage}`
+      );
+      const data = await response.json();
+      if (data && Array.isArray(data.results)) {
+        actorPair = pickPair(data.results);
+      }
+    } catch (error) {
+      console.log('newGame fetch error', error);
+    }
+  }
 
-  // Ensure that the two actors don't have the adult flag set to true
-  do {
-    // actorPair[0] = actorList[5];
-    actorPair[0] = randActorPicker(actorList);
-    actorPair[0].adultContent = checkAdultContent(actorPair[0]);
-  } while (actorPair[0].adultContent === true);
+  if (!actorPair) {
+    throw new Error('Could not load actors for a new game');
+  }
 
-  do {
-    // actorPair[1] = actorList[6];
-    actorPair[1] = randActorPicker(actorList);
-    actorPair[1].adultContent = checkAdultContent(actorPair[1]);
-  } while (
-    actorPair[1].adultContent === true ||
-    actorPair[0].id === actorPair[1].id
-  );
+  // Add the adult flag and the full image path each actor needs downstream.
+  actorPair.forEach((actor) => {
+    actor.adultContent = checkAdultContent(actor);
+    actor.image = actor.profile_path ? image500 + actor.profile_path : null;
+  });
 
-  //providing the actual image path
-  actorPair[0].image = actorPair[0].profile_path
-    ? image500 + actorPair[0].profile_path
-    : null;
-
-  actorPair[1].image = actorPair[1].profile_path
-    ? image500 + actorPair[1].profile_path
-    : null;
   return actorPair;
 };
 
+// Lightweight person lookup (no credits) used to show the target actor's age
+// and nationality without the heavy combined_credits payload.
+export const getActorInfo = async (id) => {
+  try {
+    const response = await fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+    );
+    const data = await response.json();
+    return { ...data, type: 'actor' };
+  } catch (error) {
+    console.log('getActorInfo error', error);
+    return null;
+  }
+};
+
 export const getActorAPI = async (id) => {
-  // GETTING THE DATA FROM THE API
   let data;
   try {
     const response = await fetch(
@@ -150,14 +162,11 @@ export const getMovieAPI = async (id) => {
     actor.type = 'actor';
   });
 
-  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
-  data.cast = data.credits.cast.filter((actor) => {
-    return actor.adult === false;
-  });
-
-  // SPLITTING THE TOP 5 ACTORS
-  data.top5 = data.credits.cast.splice(0, 5);
-  data.cast = data.credits.cast;
+  // Non-adult cast; top5 is the first five, kept in the full list too so the
+  // playground can exclude whatever it shows on top without losing anyone.
+  const movieCast = data.credits.cast.filter((actor) => actor.adult === false);
+  data.top5 = movieCast.slice(0, 5);
+  data.cast = movieCast;
 
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;
@@ -186,14 +195,12 @@ export const getTvAPI = async (id) => {
     actor.type = 'actor';
   });
 
-  // DELETING THE ACTORS THAT PERFORM IN ADULT CONTENT
-  data.aggregate_credits.cast.filter((actor) => {
-    return actor.adult === false;
-  });
-
-  // GETTING THE TOP 5 ACTORS
-  data.top5 = data.aggregate_credits.cast.splice(0, 5);
-  data.cast = data.aggregate_credits.cast;
+  // Non-adult cast; top5 is the first five, kept in the full list too.
+  const tvCast = data.aggregate_credits.cast.filter(
+    (actor) => actor.adult === false
+  );
+  data.top5 = tvCast.slice(0, 5);
+  data.cast = tvCast;
 
   // DELETING THE OLD UNFILTERED CREDITS LIST
   delete data.credits;

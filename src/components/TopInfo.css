@@ -23,3 +23,26 @@
   width: 90%;
   margin: 0 auto;
 }
+
+/* Top5 shown as a horizontal strip you can swipe through. */
+.top-info-container .top-info-movies {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 10px;
+  padding-bottom: 8px;
+}
+
+.top-info-movies .top5-button {
+  width: 130px;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 600px) {
+  .top-info-container .top-info-movies {
+    width: 100%;
+  }
+
+  .top-info-movies .top5-button {
+    width: 96px;
+  }
+}

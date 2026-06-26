@@ -31,13 +31,6 @@ function HowTo() {
               <br /> will be recorded at the end!
             </h2>
           </li>
-          <li>
-            <h2>
-              You can end the game at any time by pressing the{' '}
-              <span className='bold blue-text'>GIVE UP</span> button
-              <br /> in the bottom left corner.
-            </h2>
-          </li>
         </ul>
       </div>
       <Link to='/' style={{ textDecoration: 'none' }}>

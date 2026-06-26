@@ -84,5 +84,16 @@
 
 .empty-image {
   display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: var(--image-background);
+  /* Keep a portrait box even when the height is set to auto (e.g. on mobile,
+     where the real <img> relies on its own aspect ratio). Without this the
+     placeholder collapses to nothing and only the name shows. */
+  aspect-ratio: 2 / 3;
+}
+
+.empty-image svg {
+  width: 65%;
+  height: auto;
 }
