@@ -12,6 +12,8 @@ MDG Games is a web app where you can test your knowledge about movies, series an
 - **Firebase** - Google platform used to provide OAuth.
 - **Cloud Firestore** - Real-Time Cloud database from Google.
 
+Analítica propia y sin cookies (Umami en stats.hudsn.app): pantallas visitadas, con los identificadores cambiados por `:id` (`public/stats.js`).
+
 ## Getting started
 
 1. Clone the repo
