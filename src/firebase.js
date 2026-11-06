@@ -11,6 +11,7 @@ import {
   signInWithRedirect,
   getRedirectResult,
   onAuthStateChanged,
+  getAdditionalUserInfo,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -19,7 +20,7 @@ import {
   updateDoc,
   setDoc,
 } from 'firebase/firestore';
-import { identify } from './analytics';
+import { identify, track } from './analytics';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
@@ -44,6 +45,8 @@ export const provider = new GoogleAuthProvider();
 // surface a message to the user instead of navigating on a failed sign-in.
 export const signInWithGoogle = async () => {
   const result = await signInWithPopup(auth, provider);
+  // Solo cuentas nuevas: createUserDocument también corre al entrar.
+  if (getAdditionalUserInfo(result)?.isNewUser) track('registrarse', { via: 'google' });
   return createUserDocument(result.user);
 };
 
@@ -56,6 +59,7 @@ export const signInWithGoogleRedirect = async () => {
 export const getGoogleRedirectResult = async () => {
   const result = await getRedirectResult(auth);
   if (!result) return null;
+  if (getAdditionalUserInfo(result)?.isNewUser) track('registrarse', { via: 'google' });
   return createUserDocument(result.user);
 };
 

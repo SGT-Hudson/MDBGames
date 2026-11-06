@@ -6,6 +6,7 @@ import MovieList from './MovieList';
 import Top5Item from './Top5Item';
 import { itemMeta } from '../meta';
 import { useNavigate } from 'react-router-dom';
+import { track, hopsBucket, timeBucket } from '../analytics';
 
 function Playground({ value, end }) {
   const [ready, setReady] = useState(false);
@@ -48,6 +49,11 @@ function Playground({ value, end }) {
     if (type === 'actor' && id === end.id) {
       const timeInSec = Math.round((Date.now() - time) / 1000);
 
+      // path aún no incluye al actor de destino: son los clics hasta aquí.
+      track('ganar-partida', {
+        saltos: hopsBucket(path.length),
+        tiempo: timeBucket(timeInSec),
+      });
       navigate('/endscreen', {
         replace: true,
         state: [value, end, [...path, end.name], timeInSec],

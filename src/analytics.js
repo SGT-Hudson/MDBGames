@@ -47,3 +47,19 @@ export function identify(accountId) {
     // La analítica nunca rompe la app.
   }
 }
+
+// Tramos para los datos de los eventos: nunca el valor exacto. Dos clics (actor -> título -> actor) son un salto.
+export function hopsBucket(clicks) {
+  const saltos = Math.ceil(clicks / 2);
+  if (saltos <= 3) return '1-3';
+  if (saltos <= 6) return '4-6';
+  if (saltos <= 10) return '7-10';
+  return '11+';
+}
+
+export function timeBucket(seconds) {
+  if (seconds < 60) return '<1 min';
+  if (seconds < 180) return '1-3 min';
+  if (seconds < 600) return '3-10 min';
+  return '10+ min';
+}

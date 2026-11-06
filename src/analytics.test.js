@@ -1,6 +1,6 @@
 import { webcrypto } from "crypto";
 import { TextEncoder } from "util";
-import { track, identify, pseudonym } from "./analytics";
+import { track, identify, pseudonym, hopsBucket, timeBucket } from "./analytics";
 
 describe("analytics", () => {
   const realCrypto = global.crypto;
@@ -70,5 +70,31 @@ describe("analytics", () => {
   test("track no propaga si umami.track lanza", () => {
     window.umami = { track: () => { throw new Error("boom"); } };
     expect(() => track("x")).not.toThrow();
+  });
+});
+
+describe("tramos", () => {
+  test.each([
+    [2, "1-3"],
+    [6, "1-3"],
+    [8, "4-6"],
+    [12, "4-6"],
+    [14, "7-10"],
+    [20, "7-10"],
+    [22, "11+"],
+  ])("hopsBucket(%i clics) = %s", (clicks, tramo) => {
+    expect(hopsBucket(clicks)).toBe(tramo);
+  });
+
+  test.each([
+    [0, "<1 min"],
+    [59, "<1 min"],
+    [60, "1-3 min"],
+    [179, "1-3 min"],
+    [180, "3-10 min"],
+    [599, "3-10 min"],
+    [600, "10+ min"],
+  ])("timeBucket(%is) = %s", (segundos, tramo) => {
+    expect(timeBucket(segundos)).toBe(tramo);
   });
 });
