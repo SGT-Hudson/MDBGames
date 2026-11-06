@@ -10,6 +10,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   getRedirectResult,
+  onAuthStateChanged,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -18,6 +19,7 @@ import {
   updateDoc,
   setDoc,
 } from 'firebase/firestore';
+import { identify } from './analytics';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
@@ -33,6 +35,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // export const analytics = getAnalytics(app);
 export const auth = getAuth(app);
+// Analítica: el seudónimo de la cuenta acompaña a cada envío; se quita al cerrar sesión.
+onAuthStateChanged(auth, (u) => identify(u ? u.uid : null));
 export const db = getFirestore(app);
 export const provider = new GoogleAuthProvider();
 
