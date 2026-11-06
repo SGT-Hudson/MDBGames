@@ -9,6 +9,7 @@ import { ReactComponent as ArrowBack } from '../images/arrow-back.svg';
 import ImageContainer from '../components/ImageContainer';
 
 import { newGame } from '../api_calls';
+import { track } from '../analytics';
 import './GameInit.css';
 
 // Placeholder card shown while the actor data and photos are loading.
@@ -140,7 +141,11 @@ function GameInit() {
         </button>
 
         {showCards ? (
-          <Link to='/game' state={actors}>
+          <Link
+            to='/game'
+            state={actors}
+            onClick={() => track('empezar-partida')}
+          >
             <button className='button large-button large-shadow'>
               START GAME
             </button>

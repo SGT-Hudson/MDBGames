@@ -13,6 +13,7 @@ MDG Games is a web app where you can test your knowledge about movies, series an
 - **Cloud Firestore** - Real-Time Cloud database from Google.
 
 Analítica propia y sin cookies (Umami en stats.hudsn.app): pantallas visitadas, con los identificadores cambiados por `:id` (`public/stats.js`).
+Eventos: `registrarse`, `empezar-partida`, `ganar-partida`, `rendirse`, `ver-como-jugar`; los datos son solo tramos (saltos, tiempo), nunca nombres ni identificadores.
 
 ## Getting started
 

@@ -4,6 +4,7 @@ import ImageContainer from '../components/ImageContainer';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import './Sidebar.css';
 import { Link } from 'react-router-dom';
+import { track } from '../analytics';
 import { getActorInfo } from '../api_calls';
 import { itemMeta } from '../meta';
 
@@ -53,6 +54,7 @@ function Sidebar({ actor, end }) {
             state={[actor, end, null, timer]}
             style={{ textDecoration: 'none' }}
             className='give-up-link'
+            onClick={() => track('rendirse')}
           >
             <div className='give-up'>
               <p>Give Up</p>

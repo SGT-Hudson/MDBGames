@@ -10,6 +10,7 @@ import {
 import { ReactComponent as Google } from '../images/google-color-icon.svg';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import './Login.css';
+import { track } from '../analytics';
 
 // Turn raw Firebase auth error codes into something a user can act on.
 const friendlyError = (error) => {
@@ -96,6 +97,7 @@ function Login() {
         await logInWithEmail(email, password);
       } else {
         await registerWithEmail(email, password);
+        track('registrarse', { via: 'email' });
       }
       navigate('/profile');
     } catch (err) {

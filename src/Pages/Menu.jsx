@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../images/logo.svg';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, getUserDocument } from '../firebase';
+import { track } from '../analytics';
 import { ReactComponent as Empty } from '../images/empty_profile_photo.svg';
 import './Menu.css';
 
@@ -68,7 +69,7 @@ function Menu() {
           )}
 
           <div className='flex-row'>
-            <Link to='/howto'>
+            <Link to='/howto' onClick={() => track('ver-como-jugar')}>
               <button className='button small-button large-text large-shadow'>
                 ?
               </button>
